@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
+    public GameObject Dead;
     private float speed=1500;
     void Update()
     {
@@ -15,7 +16,7 @@ public class PlayerMovment : MonoBehaviour
         void OnCollisionEnter(Collision Hit){
         if(Hit.collider.tag=="Obstacle"){
         Time.timeScale=0;
-        //Invoke("delayDead",2f);
+        Dead.SetActive(true);
         }
-}
+        }
 }

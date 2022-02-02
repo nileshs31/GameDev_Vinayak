@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(1,2));
         score+=1;
         spawned=Instantiate(Obstacle);
-            spawned.transform.position+=new Vector3(Random.Range(0,8),0,0);
+            spawned.transform.position+=new Vector3(Random.Range(0,4),0,0);
             spawned.GetComponent<ObstacleScript>().speed=-Random.Range(20,40);
     }
 }

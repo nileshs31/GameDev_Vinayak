@@ -2,15 +2,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    /*public bool dead=false;
+    //public bool dead=false;
     public GameObject Dead;
     public void GameOver(){
-        if(dead==false){
-            dead=true;
+        //if(dead==false){
+          //  dead=true;
             Dead.SetActive(true);
             //Cameras.Cam=false;
         }
-    }
+    /*
     void Restart(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         //Cameras.Cam=true;
@@ -29,5 +29,5 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         //Cameras.Cam=true;
     }*/
-
 }
+
