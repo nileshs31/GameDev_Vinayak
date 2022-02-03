@@ -11,7 +11,7 @@ public class ObstacleScript : MonoBehaviour
     void Update(){
         if(transform.position.z<-8){
         Object.Destroy(gameObject,0f);
-        Score.sc+=1;
+        GameManager.sc+=1;
         }
     }
 }

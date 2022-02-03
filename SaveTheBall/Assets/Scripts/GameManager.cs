@@ -1,33 +1,31 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    //public bool dead=false;
-    public GameObject Dead;
-    public void GameOver(){
-        //if(dead==false){
-          //  dead=true;
-            Dead.SetActive(true);
-            //Cameras.Cam=false;
-        }
-    /*
-    void Restart(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //Cameras.Cam=true;
-    }
+    public GameObject PauseText;
+    public GameObject Score;
 
-    /*public void EndGame(){
-        Invoke("Completed",1f);
-    }
-    void Completed(){
-        Complete.SetActive(true);
-        Cameras.Cam=false;
-        Floor.SetActive(false);
-        dead=true;
-    }
-    public void end(){
+
+    public void Pause(){
+        if(Time.timeScale==1){
+        Time.timeScale=0;
+        PauseText.GetComponent<Text>().text="Resume";
+        }
+        else{
+        Time.timeScale=1;
+        PauseText.GetComponent<Text>().text="Pause";
+        }
+    } 
+    public void play(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //Cameras.Cam=true;
-    }*/
+        sc=0;
+        Time.timeScale=1;
+    }   
+    public static int sc=0;
+    void Update()
+    {
+        Score.GetComponent<Text>().text=sc.ToString("0");
+    }    
 }
 
