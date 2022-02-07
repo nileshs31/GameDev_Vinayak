@@ -48,8 +48,10 @@ public class PlayerMovment : MonoBehaviour
     }*/
     public void left(){
         input=-1;
+        print("left");
     }
     public void right(){
         input=1;
+        print("right");
     }
 }
