@@ -10,6 +10,6 @@ public class BallMovement : MonoBehaviour
         FreeRom();
     }
     private void FreeRom(){
-        transform.Translate(Vector3.forward*Time.deltaTime*speed);
+        gameObject.GetComponent<Rigidbody2D>().velocity=new Vector2(0f,speed);
     }
 }
