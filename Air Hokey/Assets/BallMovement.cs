@@ -5,11 +5,15 @@ using UnityEngine;
 public class BallMovement : MonoBehaviour
 {
     public float speed=10;
+    Rigidbody2D rb;
 
-    void Update(){
-        FreeRom();
+    void Start()
+    {
+        rb=GetComponent<Rigidbody2D>();
     }
-    private void FreeRom(){
-        gameObject.GetComponent<Rigidbody2D>().velocity=new Vector2(0f,speed);
+
+    void FixedUpdate()
+    {
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity,speed);        
     }
 }
