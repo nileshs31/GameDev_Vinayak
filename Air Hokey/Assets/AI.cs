@@ -11,6 +11,8 @@ public class AI : MonoBehaviour
     private Vector2 Targetpos;
     private Vector2 Movepos;
     static int Ball=0;
+    private float offsetXFromTarget;
+    private bool isFirstTimeInOpponentsHalf=true;
     // 0 is ball span other// 1 ball in span here// 2 in game ball enter other// 3 ball comming towards// 4 ball in box
     
     void Start()
@@ -21,7 +23,7 @@ public class AI : MonoBehaviour
     void FixedUpdate()
     {
         Ballpos=BallBody.position;
-        switch (Ball)
+        /*switch (Ball)
         {
             case 0:
                 break;
@@ -39,8 +41,26 @@ public class AI : MonoBehaviour
                 break;
             default:
                 break;
-        }
-        rb.MovePosition(Vector2.MoveTowards(rb.position,Targetpos,AIspeed * Time.fixedDeltaTime));
+        }*/
+            if (Ballpos.y<0)
+            {
+                if (isFirstTimeInOpponentsHalf)
+                {
+                    isFirstTimeInOpponentsHalf = false;
+                    offsetXFromTarget = Random.Range(-1f, 1f);
+                }
+
+                //AIspeed * Random.Range(0.1f, 0.3f);
+                Targetpos = new Vector2(Mathf.Clamp(Ballpos.x + offsetXFromTarget,-2.2f,2.2f),3.6f);
+            }
+            else
+            {
+                isFirstTimeInOpponentsHalf = true;
+                Targetpos=new Vector2(Mathf.Clamp(Ballpos.x,-2.2f,2.2f),Mathf.Clamp(Ballpos.y,0.5f,4.45f));
+            }
+
+        //rb.MovePosition(Vector2.MoveTowards(rb.position, targetPosition,movementSpeed * Time.fixedDeltaTime));
+        rb.MovePosition(Vector2.MoveTowards(rb.position,Targetpos,AIspeed * Random.Range(0.1f, 0.3f) * Time.fixedDeltaTime));
     }
 
     private void LateUpdate()
