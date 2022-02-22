@@ -5,14 +5,20 @@ using TMPro;
 
 public class BallMovement : MonoBehaviour
 {
-    private int GamePoint=1;
-    private float speed=12;
+    private int GamePoint=5;
+    private float speed=8;
     Rigidbody2D rb;
     private int ScoreAI,ScoreP;
     public GameObject AIScore,PScore;
+    private GameController gc;
     void Start()
     {
+        gc=GameObject.Find("GameController").GetComponent<GameController>();
         rb=GetComponent<Rigidbody2D>();
+        if(SceneScript.Difficulty==2)
+        speed=13;
+        if(SceneScript.Difficulty==3)
+        speed=17;   
     }
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -42,12 +48,26 @@ public class BallMovement : MonoBehaviour
     {
         if(ScoreAI==GamePoint || ScoreP==GamePoint){
             if(ScoreAI==GamePoint){
-            GameObject.Find("GameController").GetComponent<GameController>().Finish("You Lose");
+            if(SceneScript.Difficulty==1)
+            gc.Finish("HAHAHA! Loser");
+            else if(SceneScript.Difficulty==2)
+            gc.Finish("You Gotta DO Better Kid");
+            else if(SceneScript.Difficulty==3)
+            gc.Finish("You Can't Live With Your own Failure");
+            else
+            gc.Finish("Player 2 Won");
             GameObject.Find("GameController").GetComponent<audioController>().LoseSound();
             ScoreAI=0;
             }
             else{
-            GameObject.Find("GameController").GetComponent<GameController>().Finish("You Win");
+            if(SceneScript.Difficulty==1)
+            gc.Finish("Puff! That was Easy Win");
+            else if(SceneScript.Difficulty==2)
+            gc.Finish("Not Bad!");
+            else if(SceneScript.Difficulty==3)
+            gc.Finish("UNPOSSIBLE!");
+            else
+            gc.Finish("Player 1 Won");
             GameObject.Find("GameController").GetComponent<audioController>().WinSound();
             ScoreP=0;
             }

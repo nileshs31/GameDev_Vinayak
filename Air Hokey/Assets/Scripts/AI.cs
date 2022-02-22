@@ -2,14 +2,18 @@
 
 public class AI : MonoBehaviour
 {
-    public float offsetXFromTarget,AIspeed = 20;
+    private float offsetXFromTarget,AIspeed = 20;
     public Rigidbody2D BallBody;
     private Rigidbody2D rb;
     private Vector2 Ballpos,Targetpos;
-    private bool isFirstTimeInOpponentsHalf=true;    
+    private bool isFirstTimeInOpponentsHalf=true;   
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if(SceneScript.Difficulty==2)
+        AIspeed=50;
+        if(SceneScript.Difficulty==3)
+        AIspeed=100;        
     }
     
     void FixedUpdate()
@@ -22,7 +26,7 @@ public class AI : MonoBehaviour
                     isFirstTimeInOpponentsHalf = false;
                     offsetXFromTarget = Random.Range(-1f, 1f);
                 }
-            Targetpos = new Vector2(Mathf.Clamp(Ballpos.x + offsetXFromTarget,-2.2f,2.2f),3.6f);
+            Targetpos = new Vector2(Mathf.Clamp(Ballpos.x + offsetXFromTarget,-2.2f,2.2f),4.3f);
             }
         else
             {
