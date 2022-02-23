@@ -20,18 +20,18 @@ public class PlayerMovement : MonoBehaviour {
     }
 	void Update ()
     {
+        //If Android this will work
 		if (Input.touchCount>0){
             if((Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).y<0 && touchPlayer==1) || (Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).y>0 && touchPlayer==2)){
             TheTouch=Input.GetTouch(0);
             MovePlayer();
             }
-        }
-        else if(Input.touchCount>1){
-            if((Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y<0 && touchPlayer==1) || (Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y>0 && touchPlayer==2)){
+            else if((Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y<0 && touchPlayer==1) || (Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y>0 && touchPlayer==2)){
             TheTouch=Input.GetTouch(1);
             MovePlayer();
             }
         }
+        //If Windows this arrows for p1 and aswd for p2 work
     }
     private void MovePlayer(){
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(TheTouch.position);
