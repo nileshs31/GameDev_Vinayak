@@ -11,8 +11,10 @@ public class BallMovement : MonoBehaviour
     private int ScoreAI,ScoreP;
     public GameObject AIScore,PScore;
     private GameController gc;
+    public Collider2D Divider;
     void Start()
     {
+        Physics2D.IgnoreCollision(Divider,gameObject.GetComponent<Collider2D>(),true);
         gc=GameObject.Find("GameController").GetComponent<GameController>();
         rb=GetComponent<Rigidbody2D>();
         if(SceneScript.Difficulty==2)

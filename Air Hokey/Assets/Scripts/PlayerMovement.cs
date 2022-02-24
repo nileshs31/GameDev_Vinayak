@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
     private Touch TheTouch;
     private Vector2 bounds;
     private float touchPlayer;
+    public static bool p1t0=false,p1t1=false,p2t0=false,p2t1=false;
 	void Start ()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,18 +21,44 @@ public class PlayerMovement : MonoBehaviour {
     }
 	void Update ()
     {
-        //If Android this will work
 		if (Input.touchCount>0){
-            if((Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).y<0 && touchPlayer==1) || (Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).y>0 && touchPlayer==2)){
-            TheTouch=Input.GetTouch(0);
-            MovePlayer();
+            //touch0 in player1
+            if((Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).y<0 && touchPlayer==1) && !p1t1){
+                p1t0=true;
+                TheTouch=Input.GetTouch(0);
+                Debug.Log(TheTouch.rawPosition);
+                MovePlayer();
+                if(TheTouch.phase==TouchPhase.Ended)
+                    p1t0=false;
             }
-            else if((Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y<0 && touchPlayer==1) || (Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y>0 && touchPlayer==2)){
-            TheTouch=Input.GetTouch(1);
-            MovePlayer();
+            //touch0 in player2
+            else if((Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).y>0 && touchPlayer==2) && !p2t1){
+                p2t0=true;
+                TheTouch=Input.GetTouch(0);
+                Debug.Log(TheTouch.rawPosition);
+                MovePlayer();
+                if(TheTouch.phase==TouchPhase.Ended)
+                    p2t0=false;
+            }
+            //touch1 in player1
+            else if((Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y<0 && touchPlayer==1) && !p1t0){
+                p1t1=true;
+                TheTouch=Input.GetTouch(0);
+                Debug.Log(TheTouch.rawPosition);
+                MovePlayer();
+                if(TheTouch.phase==TouchPhase.Ended)
+                    p1t1=false;
+            }
+            //touch1 in player2
+            else if((Camera.main.ScreenToWorldPoint(Input.GetTouch(1).position).y>0 && touchPlayer==2) && !p2t0){
+                p2t1=true;
+                TheTouch=Input.GetTouch(0);
+                Debug.Log(TheTouch.rawPosition);
+                MovePlayer();
+                if(TheTouch.phase==TouchPhase.Ended)
+                    p2t1=false;
             }
         }
-        //If Windows this arrows for p1 and aswd for p2 work
     }
     private void MovePlayer(){
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(TheTouch.position);
