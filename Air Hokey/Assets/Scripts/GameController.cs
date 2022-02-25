@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     void Start(){
         if(SceneScript.Difficulty>0){
         //Destroy(GameObject.Find("Player2").GetComponent<Player2Movement>());
-        GameObject.Find("Player2").GetComponent<Player2Movement>().enabled=false;
+        GameObject.Find("Player2").GetComponent<PlayerMovement>().enabled=false;
         GameObject.Find("Player2").GetComponent<AI>().enabled=true;
         }
     }
