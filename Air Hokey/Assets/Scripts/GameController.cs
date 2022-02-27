@@ -7,8 +7,7 @@ public class GameController : MonoBehaviour
     public GameObject PauseUI;
     
     void Start(){
-        if(SceneScript.Difficulty>0){
-        //Destroy(GameObject.Find("Player2").GetComponent<Player2Movement>());
+        if(SceneScript.Difficulty>0){//Multiplayer Script Change
         GameObject.Find("Player2").GetComponent<PlayerMovement>().enabled=false;
         GameObject.Find("Player2").GetComponent<AI>().enabled=true;
         }
