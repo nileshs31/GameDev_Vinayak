@@ -6,7 +6,8 @@ using TMPro;
 public class BallMovement : MonoBehaviour
 {
     private int GamePoint = 5;//point to win the Game
-    private float speed = 8;
+    private float speed = 9;
+    public static int GaolIN=0;
     Rigidbody2D rb;
     private int ScoreAI, ScoreP;
     public GameObject AIScore, PScore;//UI for Score Display
@@ -19,7 +20,7 @@ public class BallMovement : MonoBehaviour
         gc = GameObject.Find("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody2D>();
         if (SceneScript.Difficulty == 2)
-            speed = 10;
+            speed = 11;
         if (SceneScript.Difficulty == 3)
             speed = 13;
     }
@@ -29,8 +30,9 @@ public class BallMovement : MonoBehaviour
         if (other.collider.name == "GoalAI")
         {   // AI has Scored a Goal
             GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
-            StartCoroutine("Goal");
-            rb.position = new Vector2(10f, 10f);
+            StartCoroutine("AIGoal");
+            GaolIN=1;
+            rb.position = new Vector2(-12f, -12f);//out of screen
             rb.velocity = new Vector2(0f, 0f);
             ScoreAI += 1;
             AIScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreAI.ToString();
@@ -38,8 +40,9 @@ public class BallMovement : MonoBehaviour
         else if (other.collider.name == "GoalP")
         {   // Player has Scored a Goal
             GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
-            StartCoroutine("Goal");
-            rb.position = new Vector2(10f, 10f);
+            StartCoroutine("PGoal");
+            GaolIN=1;
+            rb.position = new Vector2(-10f, -10f);
             rb.velocity = new Vector2(0f, 0f);
             ScoreP += 1;
             PScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreP.ToString();
@@ -47,7 +50,7 @@ public class BallMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);//Speed Limit
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed); //Speed Limit
     }
     void Update()
     {
@@ -82,10 +85,20 @@ public class BallMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator Goal()//Reset Ball Position with a bit Delay
+    private IEnumerator AIGoal()//Reset Ball Position with a bit Delay
     {
-        yield return new WaitForSeconds(1f);
-        rb.position = new Vector2(0f, 0f);
+        yield return new WaitForSeconds(0.5f);
+        GaolIN=0;
+        yield return new WaitForSeconds(0.5f);
+        rb.position = new Vector2(0f, -0.5f);
+        AI.FirstHit = false;
+    }
+    private IEnumerator PGoal()//Reset Ball Position with a bit Delay
+    {
+        yield return new WaitForSeconds(0.5f);
+        GaolIN=0;
+        yield return new WaitForSeconds(0.2f);
+        rb.position = new Vector2(0f, 0.5f);
         AI.FirstHit = false;
     }
 }

@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 public class AI : MonoBehaviour
 {
-    private float offsetXFromTarget,AIspeed = 5;
+    private float offsetXFromTarget,AIspeed = 4;
     public Rigidbody2D BallBody;
     private Rigidbody2D rb;
     private Vector2 Ballpos,Targetpos;
-    private bool isFirstTimeInOpponentsHalf=true; //if ball is in Player Side for first time
+    private bool isFirstTimeInOpponentsHalf=true; //1 time runs when ball enter other side
     public static bool FirstHit=false; //the AI Hit the Ball no need to follow it with much speed
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         if(SceneScript.Difficulty==2)
-        AIspeed=10;
+        AIspeed=7;
         if(SceneScript.Difficulty==3)
-        AIspeed=15;        
+        AIspeed=9;        
+    }
+    void Update(){
+        if(BallMovement.GaolIN==1)
+        StartCoroutine("ResetAI");
     }
     
     void FixedUpdate()
@@ -43,7 +49,9 @@ public class AI : MonoBehaviour
                 else
                 Targetpos=Ballpos;
             }
-        if(FirstHit){//slow speed
+        if(BallMovement.GaolIN==1){//Goal - No need to move
+        }
+        else if(FirstHit){//slow speed
             rb.MovePosition(Vector2.MoveTowards(rb.position,Targetpos,AIspeed * 0.7f * Time.fixedDeltaTime));
         }
         else{
@@ -56,5 +64,11 @@ public class AI : MonoBehaviour
         if((other.collider.name=="Ball") && !FirstHit){
             FirstHit=true;
         }
+    }
+    private IEnumerator ResetAI()
+    {
+        rb.position=new Vector2(10f,10f);
+        yield return new WaitForSeconds(0.5f);
+        rb.position=new Vector2(0f,3.75f);
     }
 }
