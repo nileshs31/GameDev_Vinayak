@@ -11,7 +11,7 @@ public class P2 : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        bounds = new Vector2(0.5f, 4.5f);
+        bounds = new Vector2(0.6f, 4.4f);
     }
     void Update()
     {
@@ -45,12 +45,13 @@ public class P2 : MonoBehaviour
     private void MovePlayer()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(TheTouch.position);
-        Vector2 clampedMousePos = new Vector2(Mathf.Clamp(mousePos.x, -2.2f, 2.2f), Mathf.Clamp(mousePos.y, bounds.x, bounds.y));
+        Vector2 clampedMousePos = new Vector2(Mathf.Clamp(mousePos.x, -1.5f, 1.4f), Mathf.Clamp(mousePos.y, bounds.x, bounds.y));
         rb.MovePosition(clampedMousePos);
     }
     private IEnumerator ResetPlayer(){
         rb.position=new Vector2(10f,10f);
         yield return new WaitForSeconds(0.5f);
+        rb.transform.Rotate(new Vector3(0f,0f,0f));
         rb.position=new Vector2(0f,3.75f);
     }
 }

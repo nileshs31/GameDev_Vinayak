@@ -90,6 +90,7 @@ public class BallMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GaolIN=0;
         yield return new WaitForSeconds(0.5f);
+        rb.transform.Rotate(new Vector3(0f,0f,0f));
         rb.position = new Vector2(0f, -0.5f);
         AI.FirstHit = false;
     }
@@ -98,6 +99,7 @@ public class BallMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GaolIN=0;
         yield return new WaitForSeconds(0.2f);
+        rb.transform.Rotate(new Vector3(0f,0f,0f));
         rb.position = new Vector2(0f, 0.5f);
         AI.FirstHit = false;
     }

@@ -50,12 +50,14 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator ResetPlayer2(){
         rb.position = new Vector2(10f,10f);
         yield return new WaitForSeconds(0.5f);
+        rb.transform.Rotate(new Vector3(0f,0f,0f));
         rb.velocity=new Vector2(0f,0f);
         rb.position=new Vector2(0f,3.75f);
     }
     private IEnumerator ResetPlayer1(){
         rb.position = new Vector2(15f,10f);
         yield return new WaitForSeconds(0.5f);
+        rb.transform.Rotate(new Vector3(0f,0f,0f));
         rb.velocity=new Vector2(0f,0f);
         rb.position=new Vector2(0f,-3.75f);
     }

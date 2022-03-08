@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SceneScript : MonoBehaviour
 {
+    public GameObject Panel;
     public static int Difficulty=0;
     public void ToggleEasy(){
         Difficulty=1;
@@ -26,4 +28,5 @@ public class SceneScript : MonoBehaviour
     public void StartGame(){
         SceneManager.LoadScene("Gameplay");
     }
+
 }
