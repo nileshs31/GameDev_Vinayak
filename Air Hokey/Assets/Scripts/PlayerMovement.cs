@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if (Application.platform != RuntimePlatform.Android && BallMovement.GaolIN==0)
+        if (Application.platform != RuntimePlatform.Android)
         {
             //If on Windows, this arrows for p1 and aswd for p2 work
             if (Input.GetAxis("Horizontal") != 0 && touchPlayer == 1)
@@ -42,24 +42,5 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetAxis("Vertical2") != 0 && touchPlayer == 2)
                 rb.AddForce(new Vector3(0, Input.GetAxis("Vertical2") * speed * Time.deltaTime, 0));
         }
-        if(BallMovement.GaolIN==1 && touchPlayer==1)
-        StartCoroutine("ResetPlayer1");
-        if(BallMovement.GaolIN==1 && touchPlayer==2)
-        StartCoroutine("ResetPlayer2");
     }
-    private IEnumerator ResetPlayer2(){
-        rb.position = new Vector2(10f,10f);
-        yield return new WaitForSeconds(0.5f);
-        rb.transform.Rotate(new Vector3(0f,0f,0f));
-        rb.velocity=new Vector2(0f,0f);
-        rb.position=new Vector2(0f,3.75f);
-    }
-    private IEnumerator ResetPlayer1(){
-        rb.position = new Vector2(15f,10f);
-        yield return new WaitForSeconds(0.5f);
-        rb.transform.Rotate(new Vector3(0f,0f,0f));
-        rb.velocity=new Vector2(0f,0f);
-        rb.position=new Vector2(0f,-3.75f);
-    }
-
 }

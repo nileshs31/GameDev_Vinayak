@@ -6,7 +6,6 @@ using TMPro;
 
 public class SceneScript : MonoBehaviour
 {
-    public GameObject Panel;
     public static int Difficulty=0;
     public void ToggleEasy(){
         Difficulty=1;
@@ -24,9 +23,12 @@ public class SceneScript : MonoBehaviour
     void Awake(){
         DontDestroyOnLoad(transform.gameObject);
     }
-
     public void StartGame(){
         SceneManager.LoadScene("Gameplay");
+    }
+    public void OnlineGame(){
+        Difficulty=-1;
+        SceneManager.LoadScene("Lobby");
     }
 
 }

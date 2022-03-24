@@ -11,7 +11,7 @@ public class P1 : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        bounds = new Vector2(-0.6f, -4.4f);
+        bounds = new Vector2(-4.4f,-0.6f);
     }
     void Update()
     {
@@ -39,22 +39,11 @@ public class P1 : MonoBehaviour
                 }
             }
         }
-        if(BallMovement.GaolIN==1)
-        StartCoroutine("ResetPlayer");
-
     }
     private void MovePlayer()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(TheTouch.position);
         Vector2 clampedMousePos = new Vector2(Mathf.Clamp(mousePos.x, -1.5f, 1.4f), Mathf.Clamp(mousePos.y, bounds.x, bounds.y));
-        if(BallMovement.GaolIN==0)
         rb.MovePosition(clampedMousePos);
-    }
-
-    private IEnumerator ResetPlayer(){
-        rb.position=new Vector2(10f,15f);
-        yield return new WaitForSeconds(0.5f);
-        rb.transform.Rotate(new Vector3(0f,0f,0f));
-        rb.position=new Vector2(0f,-3.75f);
     }
 }

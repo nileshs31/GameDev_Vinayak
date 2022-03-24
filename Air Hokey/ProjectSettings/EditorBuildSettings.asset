@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gameplay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: c41131176d6513b449e2c186394ffe81
+  - enabled: 1
+    path: Assets/Scenes/OnlineMP.unity
+    guid: 241873a1c465219468de7c350cc3a8ec
   m_configObjects: {}

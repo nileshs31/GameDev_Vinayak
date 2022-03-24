@@ -18,10 +18,6 @@ public class AI : MonoBehaviour
         if(SceneScript.Difficulty==3)
         AIspeed=9;        
     }
-    void Update(){
-        if(BallMovement.GaolIN==1)
-        StartCoroutine("ResetAI");
-    }
     
     void FixedUpdate()
     {
@@ -52,10 +48,8 @@ public class AI : MonoBehaviour
                 else
                 Targetpos=Ballpos;
             }
-        if(BallMovement.GaolIN==1){//Goal - No need to move
-        }
-        else if(FirstHit || slowfollow){//slow speed
-            rb.MovePosition(Vector2.MoveTowards(rb.position,Targetpos,AIspeed * 0.7f * Time.fixedDeltaTime));
+        if(FirstHit || slowfollow){//slow speed
+            rb.MovePosition(Vector2.MoveTowards(rb.position,Targetpos,AIspeed * 0.6f * Time.fixedDeltaTime));
         }
         else{
         rb.MovePosition(Vector2.MoveTowards(rb.position,Targetpos,AIspeed * Time.fixedDeltaTime));
@@ -67,12 +61,5 @@ public class AI : MonoBehaviour
         if((other.collider.name=="Ball") && !FirstHit){
             FirstHit=true;
         }
-    }
-    private IEnumerator ResetAI()
-    {
-        rb.position=new Vector2(10f,10f);
-        yield return new WaitForSeconds(0.5f);
-        rb.transform.rotation=Quaternion.identity;
-        rb.position=new Vector2(0f,3.75f);
     }
 }

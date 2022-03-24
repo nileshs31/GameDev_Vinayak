@@ -25,8 +25,8 @@ public class GameController : MonoBehaviour
     public void Finish(string s){
         FinishUI.GetComponentInChildren<TMPro.TextMeshProUGUI>().text=s;
         FinishUI.SetActive(true);
-        Destroy(GameObject.Find("Player").GetComponent<PlayerMovement>());
-        Destroy(GameObject.Find("Player2").GetComponent<AI>());
+        GameObject.Find("Player").SetActive(false);
+        GameObject.Find("Player2").SetActive(false);
     }
     public void Pause(){
         Time.timeScale=0;

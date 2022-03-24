@@ -7,9 +7,9 @@ public class BallMovement : MonoBehaviour
 {
     private int GamePoint = 5;//point to win the Game
     private float speed = 9;
-    public static int GaolIN=0;
     Rigidbody2D rb;
     private int ScoreAI, ScoreP;
+    public GameObject Player1,Player2;
     public GameObject AIScore, PScore;//UI for Score Display
     private GameController gc;
     public Collider2D Divider;//Divider between Player and AI
@@ -31,7 +31,6 @@ public class BallMovement : MonoBehaviour
         {   // AI has Scored a Goal
             GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
             StartCoroutine("AIGoal");
-            GaolIN=1;
             rb.position = new Vector2(-12f, -12f);//out of screen
             rb.velocity = new Vector2(0f, 0f);
             ScoreAI += 1;
@@ -41,7 +40,6 @@ public class BallMovement : MonoBehaviour
         {   // Player has Scored a Goal
             GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
             StartCoroutine("PGoal");
-            GaolIN=1;
             rb.position = new Vector2(-10f, -10f);
             rb.velocity = new Vector2(0f, 0f);
             ScoreP += 1;
@@ -87,20 +85,32 @@ public class BallMovement : MonoBehaviour
 
     private IEnumerator AIGoal()//Reset Ball Position with a bit Delay
     {
-        yield return new WaitForSeconds(0.5f);
-        GaolIN=0;
+        ResetPlayers();
         yield return new WaitForSeconds(0.5f);
         rb.transform.Rotate(new Vector3(0f,0f,0f));
         rb.position = new Vector2(0f, -0.5f);
         AI.FirstHit = false;
+        yield return new WaitForSeconds(0.2f);
+        SetPlayers();
     }
     private IEnumerator PGoal()//Reset Ball Position with a bit Delay
     {
+        ResetPlayers();
         yield return new WaitForSeconds(0.5f);
-        GaolIN=0;
-        yield return new WaitForSeconds(0.2f);
         rb.transform.Rotate(new Vector3(0f,0f,0f));
         rb.position = new Vector2(0f, 0.5f);
         AI.FirstHit = false;
+        yield return new WaitForSeconds(0.2f);
+        SetPlayers();
+    }
+    public void ResetPlayers(){
+        Player1.SetActive(false);
+        Player2.SetActive(false);
+    }
+    public void SetPlayers(){
+        Player1.SetActive(true);
+        Player1.GetComponent<Rigidbody2D>().transform.position=new Vector2(0f,-3.75f);
+        Player2.SetActive(true);
+        Player2.GetComponent<Rigidbody2D>().transform.position=new Vector2(0f,3.75f);
     }
 }
