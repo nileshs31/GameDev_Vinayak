@@ -14,11 +14,11 @@ public class SpawnPlayer : MonoBehaviour
     void Start() {
         //print(PhotonNetwork.IsMasterClient);
         if(PhotonNetwork.IsMasterClient){
-            Player1=PhotonNetwork.Instantiate("Player-1",new Vector3(0,-4,0),Quaternion.identity);
+            Player1=PhotonNetwork.Instantiate("Player-1",new Vector3(0,-15,0),Quaternion.identity);
             //PhotonNetwork.Instantiate("Ball",Vector3.zero,Quaternion.identity);
         }
         else{
-            Player2=PhotonNetwork.Instantiate("Player-2",new Vector3(0,4,0),Quaternion.identity);
+            Player2=PhotonNetwork.Instantiate("Player-2",new Vector3(0,15,0),Quaternion.identity);
         }
         
     }

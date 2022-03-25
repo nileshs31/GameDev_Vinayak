@@ -14,48 +14,48 @@ public class PlayerMovement2 : MonoBehaviour
     private PhotonView view;
     void Start()
     {
-        Debug.Log(gameObject.name + PhotonNetwork.IsMasterClient);
         view=GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
         Debug.Log(gameObject.name);
-        if (gameObject.name == "Player-2")
+        if (gameObject.name == "Player-2(Clone)")
         {
-            bounds = new Vector2(0.5f, 4.5f);
+            bounds = new Vector2(15.5f, 2f);
             touchPlayer = 2;
             //Camera.main.transform.Rotate(new Vector3(0,0,180));
         }
         else
         {
-            bounds = new Vector2(-4.5f, -0.5f);
+            bounds = new Vector2(-15.5f, -2f);
             touchPlayer = 1;
         }
     }
     void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0 && touchPlayer == 1 && PhotonNetwork.IsMasterClient)
-            rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * 600 * Time.deltaTime, 0, 0));
-        if (Input.GetAxis("Vertical") != 0 && touchPlayer == 1 && PhotonNetwork.IsMasterClient)
-            rb.AddForce(new Vector3(0, Input.GetAxis("Vertical") * 600 * Time.deltaTime, 0));
-        if (Input.GetAxis("Horizontal2") != 0 && touchPlayer == 2 && (!PhotonNetwork.IsMasterClient))
-            rb.AddForce(new Vector3(Input.GetAxis("Horizontal2") * 600 * Time.deltaTime, 0, 0));
-        if (Input.GetAxis("Vertical2") != 0 && touchPlayer == 2 && (!PhotonNetwork.IsMasterClient))
-            rb.AddForce(new Vector3(0, Input.GetAxis("Vertical2") * 600 * Time.deltaTime, 0));
-        if ((PhotonNetwork.IsMasterClient && touchPlayer == 1) || (touchPlayer == 2 && (!PhotonNetwork.IsMasterClient)))
-        {
-            if (Input.touchCount > 0)
+        if(!view.IsMine)
+        return;
+        if (Input.GetAxis("Horizontal") != 0 && touchPlayer == 1)
+            rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * 1000 * Time.deltaTime, 0, 0));
+        if (Input.GetAxis("Vertical") != 0 && touchPlayer == 1)
+            rb.AddForce(new Vector3(0, Input.GetAxis("Vertical") * 1000 * Time.deltaTime, 0));
+        if (Input.GetAxis("Horizontal2") != 0 && touchPlayer == 2)
+            rb.AddForce(new Vector3(Input.GetAxis("Horizontal2") * 1000 * Time.deltaTime, 0, 0));
+        if (Input.GetAxis("Vertical2") != 0 && touchPlayer == 2)
+            rb.AddForce(new Vector3(0, Input.GetAxis("Vertical2") * 1000 * Time.deltaTime, 0));
+
+        if (Input.touchCount > 0)
             {
                 TheTouch = Input.GetTouch(0);
-                view.RPC("MovePlayer",RpcTarget.All);
+                //view.RPC("MovePlayer",RpcTarget.All);
+                MovePlayer();
             }
             //if (BallMovement.GaolIN == 1)
                 //StartCoroutine("ResetPlayer");
-        }
     }
-    [PunRPC]
+    //[PunRPC]
     private void MovePlayer()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(TheTouch.position);
-        Vector2 clampedMousePos = new Vector2(Mathf.Clamp(mousePos.x, -1.5f, 1.4f), Mathf.Clamp(mousePos.y, bounds.x, bounds.y));
+        Vector2 clampedMousePos = new Vector2(Mathf.Clamp(mousePos.x, -5.5f, 5f), Mathf.Clamp(mousePos.y, bounds.x, bounds.y));
         rb.MovePosition(clampedMousePos);
     }
 

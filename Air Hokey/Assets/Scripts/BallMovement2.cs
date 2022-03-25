@@ -7,11 +7,11 @@ using Photon.Pun;
 public class BallMovement2 : MonoBehaviour
 {
     private int GamePoint = 5;//point to win the Game
-    private float speed = 9;
+    public float speed = 9;
     Rigidbody2D rb;
     private int ScoreAI, ScoreP;
     public GameObject AIScore, PScore;//UI for Score Display
-    private GameController gc;
+    private GameController1 gc;
     public Collider2D Divider;//Divider between Player and AI
     PhotonView PV;
     void Start()
@@ -19,7 +19,7 @@ public class BallMovement2 : MonoBehaviour
         PV=GetComponent<PhotonView>();
         //Ball not to Collide with Divider between Player and AI
         Physics2D.IgnoreCollision(Divider, gameObject.GetComponent<Collider2D>(), true);
-        gc = GameObject.Find("GameController").GetComponent<GameController>();
+        gc = GameObject.Find("GameController").GetComponent<GameController1>();
         rb = GetComponent<Rigidbody2D>();
         if (SceneScript.Difficulty == 2)
             speed = 11;
@@ -31,11 +31,13 @@ public class BallMovement2 : MonoBehaviour
         GameObject.Find("GameController").GetComponent<audioController>().BallHitSound();
         if (other.collider.name == "GoalAI")
         {   // AI has Scored a Goal
-            PV.RPC("RPC_AIGoal",RpcTarget.All);
+            //PV.RPC("RPC_AIGoal",RpcTarget.All);
+            RPC_AIGoal();
         }
         else if (other.collider.name == "GoalP")
         {   // Player has Scored a Goal
-            PV.RPC("RPC_PGoal",RpcTarget.All);
+            //PV.RPC("RPC_PGoal",RpcTarget.All);
+            RPC_PGaol();
         }
     }
     void FixedUpdate()
@@ -61,7 +63,7 @@ public class BallMovement2 : MonoBehaviour
             }
         }
     }
-    [PunRPC]
+    //[PunRPC]
     private void RPC_AIGoal(){
             GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
             StartCoroutine("AIGoal");
@@ -70,7 +72,7 @@ public class BallMovement2 : MonoBehaviour
             ScoreAI += 1;
             AIScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreAI.ToString();
     }
-    [PunRPC]
+    //[PunRPC]
     private void RPC_PGaol(){
             GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
             StartCoroutine("PGoal");
