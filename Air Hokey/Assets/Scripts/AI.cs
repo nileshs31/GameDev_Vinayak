@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class AI : MonoBehaviour
 {
-    private float offsetXFromTarget,AIspeed = 5;
+    private float offsetXFromTarget,AIspeed = 4;
     public Rigidbody2D BallBody;
     private Rigidbody2D rb;
     private Vector2 Ballpos,Targetpos;
@@ -14,9 +14,9 @@ public class AI : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         if(SceneScript.Difficulty==2)
-        AIspeed=7;
+        AIspeed=6;
         if(SceneScript.Difficulty==3)
-        AIspeed=9;        
+        AIspeed=8;        
     }
     
     void FixedUpdate()
@@ -33,21 +33,23 @@ public class AI : MonoBehaviour
             slowfollow=true;
             Targetpos = new Vector2(Mathf.Clamp(Ballpos.x + offsetXFromTarget,-2.2f,2.2f),4.3f);
             }
-        else//ball is in AI side
+        else
             {
                 slowfollow=false;
                 isFirstTimeInOpponentsHalf = true;
                 if(Ballpos.y>rb.position.y){//Ball is Behind the AI
                     if(Ballpos.x>0){
-                        Targetpos=new Vector2(Ballpos.x-0.4f,Ballpos.y+0.5f);
+                        Targetpos=new Vector2(Ballpos.x-0.6f,Ballpos.y+0.5f);
                     }
                     else{
-                        Targetpos=new Vector2(Ballpos.x+0.4f,Ballpos.y+0.5f);
+                        Targetpos=new Vector2(Ballpos.x+0.6f,Ballpos.y+0.5f);
                     }
                 }
                 else
                 Targetpos=Ballpos;
             }
+        if(Ballpos.y==-0.5f || Ballpos.y==0)
+            return;
         if(FirstHit || slowfollow){//slow speed
             rb.MovePosition(Vector2.MoveTowards(rb.position,Targetpos,AIspeed * 0.6f * Time.fixedDeltaTime));
         }

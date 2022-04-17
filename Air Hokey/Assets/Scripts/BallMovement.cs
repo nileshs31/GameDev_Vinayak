@@ -6,7 +6,7 @@ using TMPro;
 public class BallMovement : MonoBehaviour
 {
     private int GamePoint = 5;//point to win the Game
-    private float speed = 9;
+    private float speed = 8;
     Rigidbody2D rb;
     private int ScoreAI, ScoreP;
     public GameObject Player1,Player2;
@@ -20,9 +20,9 @@ public class BallMovement : MonoBehaviour
         gc = GameObject.Find("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody2D>();
         if (SceneScript.Difficulty == 2)
-            speed = 11;
+            speed = 10f;
         if (SceneScript.Difficulty == 3)
-            speed = 13;
+            speed = 12;
     }
     void OnCollisionEnter2D(Collision2D other)
     {

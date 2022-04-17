@@ -9,6 +9,7 @@ public class PlayerMovment : MonoBehaviour
     private int input;
     //private float speed=1500;
 
+
     void FixedUpdate()
     {
         PlayerMove();
@@ -32,9 +33,12 @@ public class PlayerMovment : MonoBehaviour
     }
     void OnCollisionEnter(Collision Hit){
         if(Hit.collider.tag=="Obstacle"){
+        deadtrigger();
+        }
+    }
+    void deadtrigger(){
         Time.timeScale=0;
         Dead.SetActive(true);
-        }
     }
     /*void TouchMove(){
         if(Input.touchCount>0){

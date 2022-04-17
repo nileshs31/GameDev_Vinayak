@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObstacleScript : MonoBehaviour
 {
-    public float speed=-10;
+    public static float speed=-10;
     void FixedUpdate(){
         gameObject.GetComponent<Rigidbody>().velocity=new Vector3(0f,0f,speed);
     }

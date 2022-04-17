@@ -547,6 +547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FinishUI: {fileID: 1844610682}
   PauseUI: {fileID: 133624521}
+  SoundUI: {fileID: 8756945306335190232}
 --- !u!4 &1628758116
 Transform:
   m_ObjectHideFlags: 0
@@ -891,7 +892,7 @@ PrefabInstance:
     - target: {fileID: 243287619173461830, guid: f3680fcf0d88a7548b258db1412f7db5,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 961.34094
+      value: 1047.664
       objectReference: {fileID: 0}
     - target: {fileID: 243287619173461830, guid: f3680fcf0d88a7548b258db1412f7db5,
         type: 3}
@@ -936,7 +937,7 @@ PrefabInstance:
     - target: {fileID: 243287619173461830, guid: f3680fcf0d88a7548b258db1412f7db5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -45.299988
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 243287619173461830, guid: f3680fcf0d88a7548b258db1412f7db5,
         type: 3}
@@ -1115,7 +1116,7 @@ PrefabInstance:
     - target: {fileID: 4826859325754287163, guid: 94414fbe343495a42a735f736a935fff,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4826859325754287163, guid: 94414fbe343495a42a735f736a935fff,
         type: 3}
@@ -1459,6 +1460,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 133624524}
     m_Modifications:
+    - target: {fileID: 8756945306585020159, guid: 9d42ad3e86471a9498eda3a27fc7d886,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1628758115}
+    - target: {fileID: 8756945306585020159, guid: 9d42ad3e86471a9498eda3a27fc7d886,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Sound
+      objectReference: {fileID: 0}
     - target: {fileID: 8756945306615329945, guid: 9d42ad3e86471a9498eda3a27fc7d886,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1586,3 +1597,9 @@ PrefabInstance:
       objectReference: {fileID: 1628758115}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d42ad3e86471a9498eda3a27fc7d886, type: 3}
+--- !u!1 &8756945306335190232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8756945306585020145, guid: 9d42ad3e86471a9498eda3a27fc7d886,
+    type: 3}
+  m_PrefabInstance: {fileID: 8756945306335190231}
+  m_PrefabAsset: {fileID: 0}

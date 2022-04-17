@@ -14,6 +14,8 @@ public class movement : MonoBehaviour
 
     void Update()
     {
+        if(transform.position.y<-2f)
+            DeadTrigger();
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             rb.AddForce(new Vector3(Input.GetAxisRaw("Horizontal") * Speed * Time.deltaTime, 0, 0));
@@ -27,8 +29,11 @@ public class movement : MonoBehaviour
     {
         if (Hit.collider.tag == "Obstacle")
         {
-            Time.timeScale = 0;
-            Dead.SetActive(true);
+            DeadTrigger();
         }
+    }
+    void DeadTrigger(){
+        Time.timeScale = 0;
+        Dead.SetActive(true);
     }
 }

@@ -48,12 +48,13 @@ public class RoomManagememt : MonoBehaviourPunCallbacks
         JoinRoomButton.SetActive(true);
         OldCreate.SetActive(false);
         OldJoin.SetActive(false);
+        Startbutton.GetComponentInChildren<Text>().text="Waiting";
     }
     public void JoinButton()
     {
         PhotonNetwork.JoinRoom(JoinRoomInpute.text);
         Debug.Log("Joinning");
-        Startbutton.GetComponentInChildren<Text>().text="Waiting";
+        Startbutton.GetComponentInChildren<Text>().text="Wait";
     }
     public void CreateButton()
     {
@@ -66,24 +67,24 @@ public class RoomManagememt : MonoBehaviourPunCallbacks
         OldJoin.SetActive(false);
         NewRoomText.GetComponent<TMPro.TextMeshProUGUI>().text+=newroom;
     }
-    public override void OnJoinedRoom()
-    {
-        if(PhotonNetwork.CurrentRoom.PlayerCount==2)
-        CreateRoomUI.SetActive(false);
-    }
+    // public override void OnJoinedRoom()
+    // {
+    //     if(PhotonNetwork.CurrentRoom.PlayerCount==2)
+    //     CreateRoomUI.GetComponentInChildren<Text>().text="Both Players Connected";
+    // }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if(PhotonNetwork.IsMasterClient)
-        CreateRoomUI.SetActive(false);;
+        CreateRoomUI.GetComponent<TMPro.TextMeshProUGUI>().text="Both Players Connected";
     }
 
     string RandomStringGenerator()
     {
-        string characters = "abcdefghijklmnopqrst1234567890";
+        string characters = "abcdefghijklmnopqrstuvwzyz1234567890";
         string generated_string = "";
 
         for(int i = 0; i < 5; i++)
-            generated_string += characters[Random.Range(0,33)];
+            generated_string += characters[Random.Range(0,35)];
 
         return generated_string;
     }
