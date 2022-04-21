@@ -107,11 +107,16 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             Debug.Log(deltaPos.magnitude);
             if (deltaPos.magnitude > 0.6f)
                 rb.AddRelativeForce(deltaPos.normalized * velocity, ForceMode2D.Force);
-            else if(deltaPos.magnitude>0.1f)
+            else if(deltaPos.magnitude>0.1f){
+                rb.velocity=Vector3.zero;
                 transform.position = Vector2.MoveTowards(transform.position, receivePos, velocity * Time.deltaTime);
+            }
             else if(deltaPos.magnitude<0.01f);
             else
+            {
+                rb.velocity=Vector3.zero;
                 rb.MovePosition(receivePos);
+            }
         }
     }
     //[PunRPC]

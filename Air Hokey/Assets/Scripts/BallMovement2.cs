@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Photon.Pun;
 
-public class BallMovement2 : MonoBehaviour, IPunObservable
+public class BallMovement2 : MonoBehaviour//, IPunObservable
 {
     private int GamePoint = 5;//point to win the Game
     private float speed = 15, xVelocity, yVelocity;
@@ -39,35 +39,35 @@ public class BallMovement2 : MonoBehaviour, IPunObservable
             RPC_PGaol();
         }
     }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            xpos = ((int)(transform.position.x * 10));
-            ypos = ((int)(transform.position.y * 10));
-            stream.SendNext(xpos);
-            stream.SendNext(ypos);
-        }
-        else
-        {
-            rxpos = (int)stream.ReceiveNext();
-            rypos = (int)stream.ReceiveNext();
-        }
-    }
+    // public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    // {
+    //     if (stream.IsWriting)
+    //     {
+    //         xpos = ((int)(transform.position.x * 10));
+    //         ypos = ((int)(transform.position.y * 10));
+    //         stream.SendNext(xpos);
+    //         stream.SendNext(ypos);
+    //     }
+    //     else
+    //     {
+    //         rxpos = (int)stream.ReceiveNext();
+    //         rypos = (int)stream.ReceiveNext();
+    //     }
+    // }
     void FixedUpdate()
     {
-        //if(PhotonNetwork.IsMasterClient)
+        if(PhotonNetwork.IsMasterClient)
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed); //Speed Limit
-        if (!PV.IsMine)
-        {
-            receivePos = new Vector2(((float)rxpos) / 10, ((float)rypos) / 10);
-            // var lag = rb.transform.position - receivePos;
-            // if (lag.magnitude != 0)
-            //     Debug.Log(lag.magnitude);
-            transform.position =Vector2.MoveTowards(transform.position, receivePos,speed*Time.deltaTime);
-            //target=Vector2.Lerp(rb.transform.position,receivePos,0.8f);
-            //return;
-        }
+        // if (!PV.IsMine)
+        // {
+        //     receivePos = new Vector2(((float)rxpos) / 10, ((float)rypos) / 10);
+        //     // var lag = rb.transform.position - receivePos;
+        //     // if (lag.magnitude != 0)
+        //     //     Debug.Log(lag.magnitude);
+        //     transform.position =Vector2.MoveTowards(transform.position, receivePos,speed*Time.deltaTime);
+        //     //target=Vector2.Lerp(rb.transform.position,receivePos,0.8f);
+        //     //return;
+        // }
     }
     void Update()
     {
