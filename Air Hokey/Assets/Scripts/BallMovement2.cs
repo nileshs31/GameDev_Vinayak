@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using Photon.Pun;
 
-public class BallMovement2 : MonoBehaviour//, IPunObservable
+public class BallMovement2 : MonoBehaviour, IPunObservable
 {
     private int GamePoint = 5;//point to win the Game
-    private float speed = 15, xVelocity, yVelocity;
+    private float speed = 15, xVelocity, yVelocity; //just random
     private Vector3 receivePos;
     private Vector2 target;
     Rigidbody2D rb;
@@ -28,54 +28,59 @@ public class BallMovement2 : MonoBehaviour//, IPunObservable
     void OnCollisionEnter2D(Collision2D other)
     {
         GameObject.Find("GameController").GetComponent<audioController>().BallHitSound();
+        if(!PV.IsMine)
+        return;
         if (other.collider.name == "GoalAI")
         {   // AI has Scored a Goal
-            //PV.RPC("RPC_AIGoal",RpcTarget.All);
-            RPC_AIGoal();
+            PV.RPC("RPC_AIGoal",RpcTarget.All);
+            //RPC_AIGoal();
+            StartCoroutine("AIGoal");
         }
-        else if (other.collider.name == "GoalP")
+        if (other.collider.name == "GoalP")
         {   // Player has Scored a Goal
-            //PV.RPC("RPC_PGoal",RpcTarget.All);
-            RPC_PGaol();
+            PV.RPC("RPC_PGoal",RpcTarget.All);
+            //RPC_PGaol();
+            StartCoroutine("PGoal");
         }
     }
-    // public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    // {
-    //     if (stream.IsWriting)
-    //     {
-    //         xpos = ((int)(transform.position.x * 10));
-    //         ypos = ((int)(transform.position.y * 10));
-    //         stream.SendNext(xpos);
-    //         stream.SendNext(ypos);
-    //     }
-    //     else
-    //     {
-    //         rxpos = (int)stream.ReceiveNext();
-    //         rypos = (int)stream.ReceiveNext();
-    //     }
-    // }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)//Sending and Recieving Position
+    {
+        if (stream.IsWriting)
+        {
+            xpos = ((int)(transform.position.x * 100));  //float to int conversion
+            ypos = ((int)(transform.position.y * 100));
+            stream.SendNext(xpos);
+            stream.SendNext(ypos);
+        }
+        else
+        {
+            rxpos = (int)stream.ReceiveNext();
+            rypos = (int)stream.ReceiveNext();
+        }
+    }
     void FixedUpdate()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if(PV.IsMine)
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed); //Speed Limit
-        // if (!PV.IsMine)
-        // {
-        //     receivePos = new Vector2(((float)rxpos) / 10, ((float)rypos) / 10);
-        //     // var lag = rb.transform.position - receivePos;
-        //     // if (lag.magnitude != 0)
-        //     //     Debug.Log(lag.magnitude);
-        //     transform.position =Vector2.MoveTowards(transform.position, receivePos,speed*Time.deltaTime);
-        //     //target=Vector2.Lerp(rb.transform.position,receivePos,0.8f);
-        //     //return;
-        // }
+        if (!PV.IsMine)
+        {
+            receivePos = new Vector2(((float)rxpos) / 100, ((float)rypos) / 100);   //int to float conversion
+            var lag = rb.transform.position - receivePos;
+            if(lag.magnitude>7)
+            transform.position=receivePos;  //teleport
+            else if (lag.magnitude>1.5f)
+            transform.position = Vector2.MoveTowards(transform.position, receivePos,speed*Time.fixedDeltaTime);
+            //target=Vector2.Lerp(rb.transform.position,receivePos,0.8f);
+            //return;
+        }
     }
     void Update()
     {
-        if (transform.position.y > 5 || transform.position.y < -5)
-        {
-            PlayerMovement2.FirstHitP1 = false;
-            PlayerMovement2.FirstHitP2 = false;
-        }
+        // if (transform.position.y > 5 || transform.position.y < -5)
+        // {
+        //     PlayerMovement2.FirstHitP1 = false;
+        //     PlayerMovement2.FirstHitP2 = false;
+        // }
         if (ScoreAI == GamePoint || ScoreP == GamePoint) //Game ENDED
         {
             if (ScoreAI == GamePoint) //Player 2 Won
@@ -97,32 +102,35 @@ public class BallMovement2 : MonoBehaviour//, IPunObservable
                 ScoreP = 0;
             }
         }
+        // if(PV.IsMine){
+        //     return;
+        // }
+        // else
+        //     StartCoroutine("Ownerships");
     }
-    //[PunRPC]
+    [PunRPC]
     private void RPC_AIGoal()
     {
         GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
-        StartCoroutine("AIGoal");
-        rb.position = new Vector2(-12f, -12f);//out of screen
-        rb.velocity = new Vector2(0f, 0f);
         ScoreAI += 1;
         AIScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreAI.ToString();
-        PlayerMovement2.FirstHitP2 = true;
+        //yield return null;
+        //PlayerMovement2.FirstHitP2 = true;
     }
-    //[PunRPC]
+    [PunRPC]
     private void RPC_PGaol()
     {
         GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
-        StartCoroutine("PGoal");
-        rb.position = new Vector2(-10f, -10f);
-        rb.velocity = new Vector2(0f, 0f);
         ScoreP += 1;
         PScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreP.ToString();
-        PlayerMovement2.FirstHitP1 = true;
+        //yield return null;
+        //PlayerMovement2.FirstHitP1 = true;
     }
 
     private IEnumerator AIGoal()//Reset Ball Position with a bit Delay
     {
+        rb.position = new Vector2(-12f, -12f);//out of screen
+        rb.velocity = new Vector2(0f, 0f);
         yield return new WaitForSeconds(0.5f);
         yield return new WaitForSeconds(0.2f);
         rb.transform.Rotate(new Vector3(0f, 0f, 0f));
@@ -131,6 +139,8 @@ public class BallMovement2 : MonoBehaviour//, IPunObservable
     }
     private IEnumerator PGoal()//Reset Ball Position with a bit Delay
     {
+        rb.position = new Vector2(12f, 12f);//out of screen
+        rb.velocity = new Vector2(0f, 0f);
         yield return new WaitForSeconds(0.5f);
         yield return new WaitForSeconds(0.2f);
         rb.transform.Rotate(new Vector3(0f, 0f, 0f));
@@ -145,5 +155,14 @@ public class BallMovement2 : MonoBehaviour//, IPunObservable
         AIScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreAI.ToString();
         rb.position = new Vector2(0f, 0f);
     }
-
+    public IEnumerator Ownerships(){
+        if(PhotonNetwork.IsMasterClient && transform.position.y<0){
+            PV.RequestOwnership();
+            yield return new WaitForSeconds(0.2f);
+        }
+        else if(!PhotonNetwork.IsMasterClient && transform.position.y>0){
+            PV.RequestOwnership();
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
 }

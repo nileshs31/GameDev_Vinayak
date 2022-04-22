@@ -14,10 +14,10 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
     private Vector2 bounds, target;
     private Vector3 receivePos;
     private float touchPlayer;
-    private float xVelocity, yVelocity, velocity = 90000;
+    private float xVelocity, yVelocity, velocity = 90000;   //random Variable
     private PhotonView view;
     private bool isMoving = true;
-    public static bool FirstHitP1 = true, FirstHitP2 = true;   // adding Velocity to player to be able to move the ball for first time
+    //public static bool FirstHitP1 = true, FirstHitP2 = true;   // adding Velocity to player to be able to move the ball for first time
     private int xpos, ypos, rxpos, rypos; //Type Casting to reduce Lag
     private void Awake()
     {
@@ -47,8 +47,8 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             //if(view.IsMine)
             if (isMoving)
             {
-                xpos = ((int)(transform.position.x * 10));
-                ypos = ((int)(transform.position.y * 10));
+                xpos = ((int)(transform.position.x * 100)); //Flaot to int conversion
+                ypos = ((int)(transform.position.y * 100));
                 stream.SendNext(xpos);
                 stream.SendNext(ypos);
             }
@@ -57,9 +57,9 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
         {
             rxpos = (int)stream.ReceiveNext();
             rypos = (int)stream.ReceiveNext();
-            receivePos = new Vector2(((float)rxpos) / 10, ((float)rypos) / 10);
-            var lag = new Vector2(rb.transform.position.x - receivePos.x, rb.transform.position.y - receivePos.y);
-            Debug.Log(lag);
+            receivePos = new Vector2(((float)rxpos) / 100, ((float)rypos) / 100);
+            //var lag = new Vector2(rb.transform.position.x - receivePos.x, rb.transform.position.y - receivePos.y);
+            //Debug.Log(lag);
         }
     }
     void Update()
@@ -104,14 +104,15 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             // else
             // transform.position = Vector2.MoveTowards(transform.position, receivePos, velocity * Time.deltaTime);
             Vector2 deltaPos = receivePos - transform.position;
-            Debug.Log(deltaPos.magnitude);
+            //Debug.Log(deltaPos.magnitude);
             if (deltaPos.magnitude > 0.6f)
                 rb.AddRelativeForce(deltaPos.normalized * velocity, ForceMode2D.Force);
             else if(deltaPos.magnitude>0.1f){
                 rb.velocity=Vector3.zero;
-                transform.position = Vector2.MoveTowards(transform.position, receivePos, velocity * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, receivePos, velocity * Time.fixedDeltaTime);
             }
-            else if(deltaPos.magnitude<0.01f);
+            else if(deltaPos.magnitude<0.01f)
+            return;
             else
             {
                 rb.velocity=Vector3.zero;

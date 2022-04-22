@@ -7,20 +7,25 @@ public class GameController1 : MonoBehaviour
 {
     public GameObject FinishUI;
     public GameObject PauseUI,SoundUI;
+    public int play=0;
     //PhotonView PV;
     
     public void PlayAgain()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        play++;
+        Finish("Waiting for opponent");
+        if(play>1){
         GameObject.Find("Ball").GetComponent<BallMovement2>().ResetGame();
         FinishUI.SetActive(false);
+        }
     }
     public void MainMenu()
     {
-        //SceneManager.LoadScene("Menu");
         //Time.timeScale=1;
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel(0);
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("Menu");
     }
 
     public void Finish(string s){
