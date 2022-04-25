@@ -8,6 +8,7 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
 {
 
     Rigidbody2D rb;
+    public Sprite Red,Blue;
     [Range(0f, 1f)] public float positionStrength = 1f;
     // [Range(0f,1f)] public float rotationStrength = 1f;
     private Touch TheTouch;
@@ -39,6 +40,14 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             bounds = new Vector2(-16f, -1.5f);
             touchPlayer = 1;
         }
+        if(!PhotonNetwork.IsMasterClient){
+            if(touchPlayer==1){
+                gameObject.GetComponent<SpriteRenderer>().sprite=Red;
+            }
+            if(touchPlayer==2){
+                gameObject.GetComponent<SpriteRenderer>().sprite=Blue;
+            }
+        }
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -64,11 +73,11 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
     }
     void Update()
     {
-        StartCoroutine("Moving");
         if (!view.IsMine)
         {
             return;
         }
+        StartCoroutine("Moving");
         if (Input.GetAxis("Horizontal") != 0 && touchPlayer == 1)
             rb.AddForce(new Vector3(Input.GetAxis("Horizontal") * velocity*10 * Time.deltaTime, 0, 0));
         if (Input.GetAxis("Vertical") != 0 && touchPlayer == 1)
@@ -83,6 +92,10 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             TheTouch = Input.GetTouch(0);
             //view.RPC("MovePlayer",RpcTarget.All);
             MovePlayer();
+        }
+        if(BallMovement2.InGoal==true && !isMoving){
+            StartCoroutine("ResetPlayer");
+            //Debug.Log(isMoving);
         }
         //if (BallMovement.GaolIN == 1)
         //StartCoroutine("ResetPlayer");
@@ -134,21 +147,20 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
 
     }
 
-    private IEnumerator ResetPlayer()
+    public IEnumerator ResetPlayer()
     {
-        rb.position = new Vector2(10f, 15f);
-        yield return new WaitForSeconds(0.5f);
         if (touchPlayer == 1)
-            rb.position = new Vector2(0f, -3.75f);
+            rb.position = new Vector2(0f, -14);
         if (touchPlayer == 2)
-            rb.position = new Vector2(0f, 3.75f);
+            rb.position = new Vector2(0f, 14);
+        yield return new WaitForSeconds(0.2f);
     }
 
     private IEnumerator Moving()
     {
         isMoving = true;
         var tmpos = transform.position;
-        yield return new WaitForEndOfFrame();//WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.09f);
         var nwpos = transform.position;
         if (tmpos == nwpos)
             isMoving = false;

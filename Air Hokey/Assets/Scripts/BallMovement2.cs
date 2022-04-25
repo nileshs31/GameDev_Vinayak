@@ -7,6 +7,7 @@ using Photon.Pun;
 public class BallMovement2 : MonoBehaviour, IPunObservable
 {
     private int GamePoint = 5;//point to win the Game
+    public static bool InGoal=false;
     private float speed = 15, xVelocity, yVelocity; //just random
     private Vector3 receivePos;
     private Vector2 target;
@@ -86,18 +87,18 @@ public class BallMovement2 : MonoBehaviour, IPunObservable
             if (ScoreAI == GamePoint) //Player 2 Won
             {
                 if (PhotonNetwork.IsMasterClient)
-                    gc.Finish("You Lose");
-                else
                     gc.Finish("You Won");
+                else
+                    gc.Finish("You Lose");
                 GameObject.Find("GameController").GetComponent<audioController>().LoseSound();
                 ScoreAI = 0;
             }
             else // Player Won
             {
                 if (PhotonNetwork.IsMasterClient)
-                    gc.Finish("You Won");
-                else
                     gc.Finish("You Lose");
+                else
+                    gc.Finish("You Won");
                 GameObject.Find("GameController").GetComponent<audioController>().WinSound();
                 ScoreP = 0;
             }
@@ -114,15 +115,17 @@ public class BallMovement2 : MonoBehaviour, IPunObservable
         GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
         ScoreAI += 1;
         AIScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreAI.ToString();
+        StartCoroutine("playerReset");
         //yield return null;
         //PlayerMovement2.FirstHitP2 = true;
     }
     [PunRPC]
-    private void RPC_PGaol()
+    private void RPC_PGoal()
     {
         GameObject.Find("GameController").GetComponent<audioController>().GoalSound();
         ScoreP += 1;
         PScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreP.ToString();
+        StartCoroutine("playerReset");
         //yield return null;
         //PlayerMovement2.FirstHitP1 = true;
     }
@@ -131,20 +134,18 @@ public class BallMovement2 : MonoBehaviour, IPunObservable
     {
         rb.position = new Vector2(-12f, -12f);//out of screen
         rb.velocity = new Vector2(0f, 0f);
-        yield return new WaitForSeconds(0.5f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.7f);
         rb.transform.Rotate(new Vector3(0f, 0f, 0f));
-        rb.position = new Vector2(0f, -1);
+        rb.position = new Vector2(0f, 4);
         //AI.FirstHit = false;
     }
     private IEnumerator PGoal()//Reset Ball Position with a bit Delay
     {
         rb.position = new Vector2(12f, 12f);//out of screen
         rb.velocity = new Vector2(0f, 0f);
-        yield return new WaitForSeconds(0.5f);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.7f);
         rb.transform.Rotate(new Vector3(0f, 0f, 0f));
-        rb.position = new Vector2(0f, 1);
+        rb.position = new Vector2(0f, -4);
         //AI.FirstHit = false;
     }
     public void ResetGame()
@@ -164,5 +165,10 @@ public class BallMovement2 : MonoBehaviour, IPunObservable
             PV.RequestOwnership();
             yield return new WaitForSeconds(0.2f);
         }
+    }
+    public IEnumerator playerReset(){
+        InGoal=true;
+        yield return new WaitForSeconds(0.7f);
+        InGoal=false;
     }
 }
