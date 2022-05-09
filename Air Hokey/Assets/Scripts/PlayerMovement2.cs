@@ -93,7 +93,7 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             //view.RPC("MovePlayer",RpcTarget.All);
             MovePlayer();
         }
-        if(BallMovement2.InGoal==true && !isMoving){
+        if(BallMovement3.InGoal==true && !isMoving){
             StartCoroutine("ResetPlayer");
             //Debug.Log(isMoving);
         }

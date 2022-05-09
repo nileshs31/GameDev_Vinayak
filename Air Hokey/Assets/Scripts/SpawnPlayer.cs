@@ -21,7 +21,6 @@ public class SpawnPlayer : MonoBehaviour
             Player2=PhotonNetwork.Instantiate("Player-2",new Vector3(0,15,0),Quaternion.identity);
             //PhotonNetwork.Instantiate("Cam2",new Vector3(-0.33f,0,-10),Quaternion.Euler(0,0,180));
         }
-        
     }
 
 }

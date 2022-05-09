@@ -16,7 +16,7 @@ public class GameController1 : MonoBehaviour
         play++;
         Finish("Waiting for opponent");
         if(play>1){
-        GameObject.Find("Ball").GetComponent<BallMovement2>().ResetGame();
+        GameObject.Find("Ball").GetComponent<BallMovement3>().ResetGame();
         FinishUI.SetActive(false);
         }
     }
