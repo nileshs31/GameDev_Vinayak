@@ -43,6 +43,11 @@ MonoBehaviour:
   - RPC_AIGoal
   - RPC_PGaol
   - RPC_PGoal
+  - gcPlay1
+  - gcPlay2
+  - Restart
+  - SendToggle
+  - SendToggleOff
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

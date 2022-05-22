@@ -12,17 +12,17 @@ public class GameController1 : MonoBehaviour
     
     public void PlayAgain()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        play++;
+        if(PhotonNetwork.IsMasterClient)
+        GameObject.Find("Ball").GetComponent<BallMovement3>().gcPlayAgain1();
+        else
+        GameObject.Find("Ball").GetComponent<BallMovement3>().gcPlayAgain2();
         Finish("Waiting for opponent");
-        if(play>1){
-        GameObject.Find("Ball").GetComponent<BallMovement3>().ResetGame();
-        FinishUI.SetActive(false);
-        }
     }
     public void MainMenu()
     {
         //Time.timeScale=1;
+        BallMovement3.Play2=false;
+        BallMovement3.Play1=false;
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.Disconnect();
         SceneManager.LoadScene("Menu");

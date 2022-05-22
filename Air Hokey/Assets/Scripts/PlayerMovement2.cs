@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using System.IO;
 
-public class PlayerMovement2 : MonoBehaviour, IPunObservable
+public class PlayerMovement2 : MonoBehaviour//, IPunObservable
 {
 
     Rigidbody2D rb;
@@ -13,23 +13,23 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
     // [Range(0f,1f)] public float rotationStrength = 1f;
     private Touch TheTouch;
     private Vector2 bounds, target;
-    private Vector3 receivePos;
+    private Vector3 receivePos,Velocity;
     private float touchPlayer;
     private float xVelocity, yVelocity, velocity = 90000;   //random Variable
     private PhotonView view;
     private bool isMoving = true;
     //public static bool FirstHitP1 = true, FirstHitP2 = true;   // adding Velocity to player to be able to move the ball for first time
     private int xpos, ypos, rxpos, rypos; //Type Casting to reduce Lag
-    private void Awake()
-    {
-        PhotonNetwork.SendRate = 15;
-        PhotonNetwork.SerializationRate = 10;
-    }
+    // private void Awake()
+    // {
+    //     PhotonNetwork.SendRate = 8;
+    //     PhotonNetwork.SerializationRate = 6;
+    // }
     void Start()
     {
         view = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
-        Debug.Log(gameObject.name);
+        //Debug.Log(gameObject.name);
         if (gameObject.name == "Player-2(Clone)")
         {
             touchPlayer = 2;
@@ -49,28 +49,29 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             }
         }
     }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            //if(view.IsMine)
-            if (isMoving)
-            {
-                xpos = ((int)(transform.position.x * 100)); //Flaot to int conversion
-                ypos = ((int)(transform.position.y * 100));
-                stream.SendNext(xpos);
-                stream.SendNext(ypos);
-            }
-        }
-        else
-        {
-            rxpos = (int)stream.ReceiveNext();
-            rypos = (int)stream.ReceiveNext();
-            receivePos = new Vector2(((float)rxpos) / 100, ((float)rypos) / 100);
-            //var lag = new Vector2(rb.transform.position.x - receivePos.x, rb.transform.position.y - receivePos.y);
-            //Debug.Log(lag);
-        }
-    }
+    // public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    // {
+    //     if (stream.IsWriting)
+    //     {
+    //         //if(view.IsMine)
+    //         if (isMoving)
+    //         {
+    //             Debug.Log(rb.velocity);
+    //             xpos = ((int)(transform.position.x * 100)); //Flaot to int conversion
+    //             ypos = ((int)(transform.position.y * 100));
+    //             stream.SendNext(xpos);
+    //             stream.SendNext(ypos);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         rxpos = (int)stream.ReceiveNext();
+    //         rypos = (int)stream.ReceiveNext();
+    //         receivePos = new Vector2(((float)rxpos) / 100, ((float)rypos) / 100);
+    //         //var lag = new Vector2(rb.transform.position.x - receivePos.x, rb.transform.position.y - receivePos.y);
+    //         //Debug.Log(lag);
+    //     }
+    // }
     void Update()
     {
         if (!view.IsMine)
@@ -116,21 +117,21 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
             // }
             // else
             // transform.position = Vector2.MoveTowards(transform.position, receivePos, velocity * Time.deltaTime);
-            Vector2 deltaPos = receivePos - transform.position;
+            //Vector2 deltaPos = receivePos - transform.position;
             //Debug.Log(deltaPos.magnitude);
-            if (deltaPos.magnitude > 0.6f)
-                rb.AddRelativeForce(deltaPos.normalized * velocity, ForceMode2D.Force);
-            else if(deltaPos.magnitude>0.1f){
-                rb.velocity=Vector3.zero;
-                transform.position = Vector2.MoveTowards(transform.position, receivePos, velocity * Time.fixedDeltaTime);
-            }
-            else if(deltaPos.magnitude<0.01f)
-            return;
-            else
-            {
-                rb.velocity=Vector3.zero;
-                rb.MovePosition(receivePos);
-            }
+            //if (deltaPos.magnitude > 0.6f)
+                //rb.AddRelativeForce(deltaPos.normalized * velocity, ForceMode2D.Force);
+            // else if(deltaPos.magnitude>0.1f){
+            //     rb.velocity=Vector3.zero;
+            //     transform.position = Vector2.MoveTowards(transform.position, receivePos, velocity * Time.fixedDeltaTime);
+            // }
+            // else if(deltaPos.magnitude<0.01f)
+            // return;
+            // else
+            // {
+            //     rb.velocity=Vector3.zero;
+            //     rb.MovePosition(receivePos);
+            // }
         }
     }
     //[PunRPC]
@@ -161,6 +162,7 @@ public class PlayerMovement2 : MonoBehaviour, IPunObservable
         isMoving = true;
         var tmpos = transform.position;
         yield return new WaitForSeconds(0.09f);
+        Velocity=(transform.position-tmpos)/Time.deltaTime;
         var nwpos = transform.position;
         if (tmpos == nwpos)
             isMoving = false;
