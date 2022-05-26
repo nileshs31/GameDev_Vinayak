@@ -6,11 +6,12 @@ using Photon.Pun;
 
 public class BallMovement4 : MonoBehaviour, IPunObservable
 {
-    private int GamePoint = 5;//point to win the Game
-    public static bool InGoal=false;
-    public bool send=false;
+   //private int GamePoint = 5;//point to win the Game
+    public static bool InGoal = false;
+    public 
+    bool send = false;
     private float speed = 15, xVelocity, yVelocity; //just random
-    public static Vector3 receivePos,receivedVel;
+    public static Vector3 receivePos, receivedVel;
     Rigidbody2D rb;
     private int ScoreAI, ScoreP;
     public GameObject AIScore, PScore;//UI for Score Display
@@ -18,11 +19,12 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
     private PhotonView PV;
     private int xpos, ypos, rxpos, rypos, xvel, yvel, rxvel, ryvel;
     public BoxCollider2D Divider;//Divider between Player and AI
+    public Color shady;
     void Start()
     {
-        if(PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().color = shady;
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
         }
         // AIScore=GameObject.Find("AIScore");
@@ -37,62 +39,70 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
     }
     void OnCollisionEnter2D(Collision2D other)
     {
+        Debug.Log(other.collider.name);
         GameObject.Find("GameController").GetComponent<audioController>().BallHitSound();
-         if (other.collider.name == "Player-2(Clone)"){
-             PV.RPC("SendToggle",RpcTarget.All);
-         }
+        if (other.collider.name == "Player-2(Clone)")
+        {
+            PV.RPC("SendToggle", RpcTarget.All);
+        }
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)//Sending and Recieving Position
     {
-        if(send){
-        if (stream.IsWriting)
+        if (send)
         {
-            xpos = ((int)(transform.position.x * 100));  //float to int conversion
-            ypos = ((int)(transform.position.y * 100));
-            xvel = ((int)(rb.velocity.x * 100));
-            yvel = ((int)(rb.velocity.y * 100));
-            stream.SendNext(send);
-            stream.SendNext(xpos);
-            stream.SendNext(ypos);
-            stream.SendNext(xvel);
-            stream.SendNext(yvel);
-        }
-        else
-        {
-            send = (bool)stream.ReceiveNext();
-            rxpos = (int)stream.ReceiveNext();
-            rypos = (int)stream.ReceiveNext();
-            rxvel = (int)stream.ReceiveNext();
-            ryvel = (int)stream.ReceiveNext();
-            receivePos = new Vector2(((float)rxpos) / 100, ((float)rypos) / 100);
-            receivedVel = new Vector2(((float)rxvel) / 100, ((float)ryvel) / 100);
-            GameObject.Find("Ball").GetComponent<BallMovement3>().P2trigger();
-        }
-        PV.RPC("SendToggleOff",RpcTarget.All);
+            if (stream.IsWriting)
+            {
+                Debug.Log("streaming");
+                xpos = ((int)(transform.position.x * 100));  //float to int conversion
+                ypos = ((int)(transform.position.y * 100));
+                xvel = ((int)(rb.velocity.x * 100));
+                yvel = ((int)(rb.velocity.y * 100));
+                stream.SendNext(send);
+                stream.SendNext(xpos);
+                stream.SendNext(ypos);
+                stream.SendNext(xvel);
+                stream.SendNext(yvel);
+            }
+            else
+            {
+                send = (bool)stream.ReceiveNext();
+                rxpos = (int)stream.ReceiveNext();
+                rypos = (int)stream.ReceiveNext();
+                rxvel = (int)stream.ReceiveNext();
+                ryvel = (int)stream.ReceiveNext();
+                receivePos = new Vector2(((float)rxpos) / 100, ((float)rypos) / 100);
+                receivedVel = new Vector2(((float)rxvel) / 100, ((float)ryvel) / 100);
+                Debug.Log("before Update");
+                GameObject.Find("Ball").GetComponent<BallMovement3>().P2trigger();
+                LocalUpdate();
+                Debug.Log("after Update");
+                PV.RPC("SendToggleOff", RpcTarget.All);
+            }
         }
     }
     void FixedUpdate()
     {
-        if(PV.IsMine)
-        rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed); //Speed Limit
+        if (PV.IsMine)
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed); //Speed Limit
     }
     void Update()
     {
-        if(PhotonNetwork.IsMasterClient)
-        return;
+        if (PhotonNetwork.IsMasterClient)
+            return;
         var lag = rb.transform.position - BallMovement3.receivePos;
-        if(lag.magnitude>10)
-            transform.position=BallMovement3.receivePos;  //teleport
-        else if (lag.magnitude>1.5f){
+        if (lag.magnitude > 10)
+            transform.position = BallMovement3.receivePos;  //teleport
+        else if (lag.magnitude > 1.5f)
+        {
             //rb.AddRelativeForce(lag.normalized * speed, ForceMode2D.Force);
             // else if(lag.magnitude>1)
-            transform.position=Vector2.MoveTowards(transform.position,BallMovement3.receivePos,0.2f);
+            transform.position = Vector2.MoveTowards(transform.position, BallMovement3.receivePos, 0.2f);
             // Debug.Log(rb.velocity);
             // Debug.Log(rb.transform.position);
             // Debug.Log(BallMovement3.receivePos);
-            }
-        if((rb.velocity-BallMovement3.receivedVel).magnitude>0.1)
-        rb.velocity=BallMovement3.receivedVel;
+        }
+        if ((rb.velocity - BallMovement3.receivedVel).magnitude > 0.1)
+            rb.velocity = BallMovement3.receivedVel;
         // if (ScoreAI == GamePoint || ScoreP == GamePoint) //Game ENDED
         // {
         //     if (ScoreAI == GamePoint) //Player 2 Won
@@ -160,17 +170,28 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
         AIScore.GetComponent<TMPro.TextMeshProUGUI>().text = ScoreAI.ToString();
         rb.position = new Vector2(0f, 0f);
     }
-    public IEnumerator playerReset(){
-        InGoal=true;
+    public IEnumerator playerReset()
+    {
+        InGoal = true;
         yield return new WaitForSeconds(0.7f);
-        InGoal=false;
+        InGoal = false;
     }
     [PunRPC]
-    public void SendToggle(){
-        send=true;
+    public void SendToggle()
+    {
+        send = true;
+        Debug.Log(send);
     }
     [PunRPC]
-    public void SendToggleOff(){
-        send=false;
+    public void SendToggleOff()
+    {
+        send = false;
+        print(send);
+    }
+    public void LocalUpdate()
+    {
+        rb.transform.position = receivePos;
+        rb.velocity = receivedVel;
+        Debug.Log("LocalUpdate");
     }
 }

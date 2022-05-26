@@ -19,6 +19,7 @@ public class BallMovement3 : MonoBehaviour, IPunObservable
     private PhotonView PV;
     public Collider2D Divider;//Divider between Player and AI
     private int xpos, ypos, rxpos, rypos; //Type Casting to reduce Lag
+    public Color shady;
     void Start()
     {
         PhotonNetwork.UseRpcMonoBehaviourCache = true;    // RPC Cache
@@ -29,7 +30,7 @@ public class BallMovement3 : MonoBehaviour, IPunObservable
         rb = GetComponent<Rigidbody2D>();
         if (!PV.IsMine)
         {
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().color=shady;
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
         }
     }
@@ -211,7 +212,7 @@ public class BallMovement3 : MonoBehaviour, IPunObservable
         }
     }
     public void P2trigger(){
-        print("P2Trigger");
+        Debug.Log("P2Trigger");
         rb.position=BallMovement4.receivePos;
         rb.velocity=BallMovement4.receivedVel;
     }

@@ -442,6 +442,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 431168548255611411, guid: c53099da0dda42b41a40a690129e6f96,
         type: 3}
+      propertyPath: m_text
+      value: 'Room ID
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 431168548255611411, guid: c53099da0dda42b41a40a690129e6f96,
+        type: 3}
       propertyPath: m_fontSize
       value: 90
       objectReference: {fileID: 0}
@@ -956,6 +963,7 @@ MonoBehaviour:
   OldJoin: {fileID: 1928696600}
   Startbutton: {fileID: 207737630}
   JoinRoomInpute: {fileID: 259029025}
+  ui: 0
 --- !u!4 &1580209688
 Transform:
   m_ObjectHideFlags: 0

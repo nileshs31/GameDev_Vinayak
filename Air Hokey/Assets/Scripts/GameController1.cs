@@ -7,7 +7,7 @@ public class GameController1 : MonoBehaviour
 {
     public GameObject FinishUI;
     public GameObject PauseUI,SoundUI;
-    public int play=0;
+    public bool menu = false;
     //PhotonView PV;
     
     public void PlayAgain()
@@ -35,11 +35,13 @@ public class GameController1 : MonoBehaviour
         // GameObject.Find("Player2").SetActive(false);
     }
     public void Pause(){
+        menu=true;
         //Time.timeScale=0;
         PauseUI.SetActive(true);
     }
     public void Resume(){
         //Time.timeScale=1;
+        menu=false;
         PauseUI.SetActive(false);
     }
     // public void Exit(){
@@ -53,6 +55,18 @@ public class GameController1 : MonoBehaviour
         else{
             SoundUI.GetComponentInChildren<Text>().text="Sounds : On";
             SceneScript.Sounds=true;
+        }
+    }
+    private void Update() {
+        if(Input.GetKey(KeyCode.Escape)){
+            if(menu){
+                PauseUI.SetActive(false);
+                menu=true;
+            }
+            else{
+                menu=false;
+                PauseUI.SetActive(true);
+            }
         }
     }
 }
