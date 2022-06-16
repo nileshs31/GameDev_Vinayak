@@ -82,8 +82,10 @@ public class RoomManagememt : MonoBehaviourPunCallbacks
     // }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient){
             CreateRoomUI.GetComponent<TMPro.TextMeshProUGUI>().text = "Both Players Connected";
+            Startbutton.GetComponentInChildren<Text>().text = "Start";
+        }
     }
 
     string RandomStringGenerator()

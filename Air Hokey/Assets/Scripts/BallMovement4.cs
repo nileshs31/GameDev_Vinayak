@@ -9,7 +9,7 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
    //private int GamePoint = 5;//point to win the Game
     public static bool InGoal = false;
     public 
-    bool send = false;
+    bool send = false,localsend=false;
     private float speed = 15, xVelocity, yVelocity; //just random
     public static Vector3 receivePos, receivedVel;
     Rigidbody2D rb;
@@ -31,6 +31,7 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
         // PScore=GameObject.Find("PScore");
         // Divider=GameObject.Find("Divider").GetComponent<BoxCollider2D>();
         PV = GetComponent<PhotonView>();
+        if(!PhotonNetwork.IsMasterClient)
         PV.RequestOwnership();
         //Ball not to Collide with Divider between Player and AI
         Physics2D.IgnoreCollision(Divider, gameObject.GetComponent<Collider2D>(), true);
@@ -43,6 +44,7 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
         GameObject.Find("GameController").GetComponent<audioController>().BallHitSound();
         if (other.collider.name == "Player-2(Clone)")
         {
+            localsend=true;
             PV.RPC("SendToggle", RpcTarget.All);
         }
     }
@@ -62,6 +64,7 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
                 stream.SendNext(ypos);
                 stream.SendNext(xvel);
                 stream.SendNext(yvel);
+                localsend=false;
             }
             else
             {
@@ -89,7 +92,11 @@ public class BallMovement4 : MonoBehaviour, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
             return;
+        if(localsend)
+            return;
         var lag = rb.transform.position - BallMovement3.receivePos;
+        // if(lag.magnitude>4 && lag.magnitude<10)
+        //     return;
         if (lag.magnitude > 10)
             transform.position = BallMovement3.receivePos;  //teleport
         else if (lag.magnitude > 1.5f)
