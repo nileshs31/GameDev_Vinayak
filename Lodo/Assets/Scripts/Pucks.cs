@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,23 +25,24 @@ public class Pucks : MonoBehaviour
         else if (gameObject.name.Contains("Blue"))
         {
             player = 1;
-            place=14;
+            place=13;
         }
         else if (gameObject.name.Contains("Green"))
         {
             player = 2;
-            place=27;
+            place=26;
         }
         else if (gameObject.name.Contains("Yellow"))
         {
             player = 3;
-            place=40;
+            place=39;
         }
     }
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.GetComponent<Pucks>().player!=player){
-            if(!alive && other.gameObject.GetComponent<Pucks>().alive && DiceRoll.OnlyOne){
+            if(DiceRoll.OnlyOne && !alive && other.gameObject.GetComponent<Pucks>().alive){
                 DiceRoll.OnlyOne=false;
+                Debug.Log("dead "+gameObject.name);
                 transform.position=Origin;
                 switch (player)
                 {
@@ -60,13 +62,17 @@ public class Pucks : MonoBehaviour
         StartCoroutine("MakeAlive");
         }
     }
-    public void OnMouseUp()
+    void OnMouseUp()
     {
-        if (DiceRoll.turn == 0 || DiceRoll.chance != player)
+        Debug.Log("Touch "+gameObject.name);
+        if (DiceRoll.turn == 0 || DiceRoll.chance != player || (DiceRoll.AllIN[player]==1 && dice!=5))
+        {
             return;
+        }
         else if (inHome && dice==5)
         {
-            transform.position = Boxes.StartPoint[player];
+            Debug.Log("free "+gameObject.name);
+            transform.position = PublicRoute[place].transform.position;
             GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
             inHome = false;
             DiceRoll.AllIN[player] += 1;
@@ -74,14 +80,23 @@ public class Pucks : MonoBehaviour
         else if (DiceRoll.OnlyOne && !inHome)
         {
             DiceRoll.OnlyOne = false;
+            Debug.Log("Moves "+gameObject.name);
             StartCoroutine("MovePlayer");
         }
     }
-    void Dicenumber(int value)
+    void Dicenumber(int value)  //Automatically Triggered by DiceRoll
     {
         if (DiceRoll.chance != player)
             return;
         dice = value;
+        if(dice==5 && DiceRoll.AllIN[player]==0 && gameObject.name.Contains("1")){
+            Debug.Log("Auto "+gameObject.name);
+            StartCoroutine("AutoRun");
+        }
+        else if(DiceRoll.AllIN[player]==1 && !inHome && dice!=5){
+            Debug.Log("Automove "+gameObject.name);
+            StartCoroutine("MovePlayer");
+        }
         //Debug.Log(dice);
     }
     IEnumerator MovePlayer()
@@ -109,5 +124,13 @@ public class Pucks : MonoBehaviour
     IEnumerator MakeAlive(){
         yield return new WaitForSeconds(0.2f);
         alive=false;
+    }
+    IEnumerator AutoRun(){
+        yield return new WaitForSeconds(0.5f);
+            //Debug.Log();
+            transform.position = PublicRoute[place].transform.position;
+            GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
+            inHome = false;
+            DiceRoll.AllIN[player] += 1;
     }
 }

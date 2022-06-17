@@ -7,7 +7,7 @@ public class DiceRoll : MonoBehaviour
 {
     public GameObject[] DicePlaceHolder;
     public Sprite[] DiceNumber;
-    public static int chance = 0; //Which Player's Chance
+    public static int chance; //Which Player's Chance
     public static int turn = 0; //Dice or Puck
     public static int[] AllIN; // no. of puck in Home
     public static Action<int> Rolled; //Updating dice value to all pucks
@@ -16,6 +16,7 @@ public class DiceRoll : MonoBehaviour
 
     void Start()
     {
+        chance = 0;
         DicePlaceHolder[0].SetActive(true);
         gameObject.transform.position = DicePlaceHolder[0].transform.position;
         AllIN = new int[4];
@@ -25,18 +26,19 @@ public class DiceRoll : MonoBehaviour
         //     AllIN[i] = 0;
         // }
     }
-    private void OnMouseDown()
+    void OnMouseDown()
     {
         if (turn == 0) //Dice turn
             gameObject.GetComponent<Animator>().enabled = true;
     }
-    public void OnMouseUp()
+    void OnMouseUp()
     {
         if (turn == 0) //Dice turn
             StartCoroutine("Roll");
     }
     IEnumerator Roll()
     {
+        Debug.Log(chance);
         var temp = UnityEngine.Random.Range(0, 6);
         if (temp == 5)
             BadLuck[chance] = 0; //player got six
@@ -55,11 +57,12 @@ public class DiceRoll : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
         gameObject.GetComponent<Animator>().enabled = false;
+        gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[temp]);
+        Debug.Log(chance);
         if (Rolled != null)
         {
             Rolled(temp);
         }
-        gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[temp]);
         if (temp == 5 || AllIN[chance] != 0)
         {
             turn = 1; //Playable
@@ -69,6 +72,7 @@ public class DiceRoll : MonoBehaviour
             yield return new WaitForSeconds(1f);
             changeTurn();
         }
+        Debug.Log(chance);
     }
     public void changeTurn()
     {

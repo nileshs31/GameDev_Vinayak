@@ -7,8 +7,8 @@ public class Boxes : MonoBehaviour
 {
     Vector2 ludosize,ludo;
     //Boundaries and Mid Point
-    [System.NonSerialized]
-    public static Vector2[] StartPoint;
+    //[System.NonSerialized]
+    //public static Vector2[] StartPoint;
     //To start at after outing from home
     [System.NonSerialized]
     public static Vector2 turnLeftUp,turnRightUp,turnLeftDown,turnRightDown;
@@ -22,16 +22,16 @@ public class Boxes : MonoBehaviour
     public static int unit; // Smallest block size
     void Start()
     {
-        StartPoint=new Vector2[4];
+        //StartPoint=new Vector2[4];
         GoIN=new Vector2[4];
         ludo=gameObject.transform.position;
         ludosize=GetComponent<BoxCollider2D>().bounds.size;
         unit=(int)Mathf.Round(ludosize.x/ludosize.y);
         //Debug.Log(ludosize);
-        StartPoint[0]=new Vector2(ludo.x-unit,ludo.y-(unit)*6);
-        StartPoint[3]=new Vector2(ludo.x+(unit)*6,ludo.y-unit);
-        StartPoint[2]=new Vector2(ludo.x+unit,ludo.y+(unit)*6);
-        StartPoint[1]=new Vector2(ludo.x-(unit)*6,ludo.y+unit);
+        // StartPoint[0]=new Vector2(ludo.x-unit,ludo.y-(unit)*6);
+        // StartPoint[3]=new Vector2(ludo.x+(unit)*6,ludo.y-unit);
+        // StartPoint[2]=new Vector2(ludo.x+unit,ludo.y+(unit)*6);
+        // StartPoint[1]=new Vector2(ludo.x-(unit)*6,ludo.y+unit);
 
         turnLeftUp=new Vector2(ludo.x-unit,ludo.y-(unit)*2);
         rightupPos=new Vector2(ludo.x-unit,ludo.y+(unit)*2);
