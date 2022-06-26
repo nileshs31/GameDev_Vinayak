@@ -10,9 +10,12 @@ public class DiceRoll : MonoBehaviour
     public static int chance; //Which Player's Chance
     public static int turn = 0; //Dice or Puck
     public static int[] AllIN; // no. of puck in Home
+    public static int[] Completed;
     public static Action<int> Rolled; //Updating dice value to all pucks
     public static bool OnlyOne = true; //when two puck on same point
     int[] BadLuck; // Six not comming
+    public static bool[] Overlap;
+    public static int tempdice=1,tempdice2=0;
 
     void Start()
     {
@@ -20,7 +23,9 @@ public class DiceRoll : MonoBehaviour
         DicePlaceHolder[0].SetActive(true);
         gameObject.transform.position = DicePlaceHolder[0].transform.position;
         AllIN = new int[4];
+        Completed = new int[4];
         BadLuck = new int[4];
+        Overlap= new bool[4];
         // for (int i = 0; i < 4; i++)
         // {
         //     AllIN[i] = 0;
@@ -34,7 +39,11 @@ public class DiceRoll : MonoBehaviour
     void OnMouseUp()
     {
         if (turn == 0) //Dice turn
+        {
+            tempdice=1;
+            tempdice2=0;
             StartCoroutine("Roll");
+        }
     }
     IEnumerator Roll()
     {
@@ -55,7 +64,7 @@ public class DiceRoll : MonoBehaviour
             if(temp==5)
             BadLuck[chance] = -2;
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.31f);
         gameObject.GetComponent<Animator>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[temp]);
         Debug.Log(chance);
@@ -69,7 +78,7 @@ public class DiceRoll : MonoBehaviour
         }
         else
         { //No Available Moves
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.31f);
             changeTurn();
         }
         Debug.Log(chance);
