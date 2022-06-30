@@ -13,9 +13,11 @@ public class Pucks : MonoBehaviour
     //GameObject[] PrivateRoute;
     bool alive = false;
     GameObject Parent;
+    public static Action OverlapFixed;
     private void OnEnable()
     {
         DiceRoll.Rolled += Dicenumber;
+        OverlapFixed += OverlapFix;
     }
     void Start()
     {
@@ -90,7 +92,6 @@ public class Pucks : MonoBehaviour
         {
             gameObject.GetComponent<BoxCollider>().isTrigger = true;
             other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
-            DiceRoll.Overlap[player] = true;
         }
     }
     void OnMouseUp()
@@ -118,6 +119,7 @@ public class Pucks : MonoBehaviour
     }
     void Dicenumber(int value)  //Automatically Triggered by DiceRoll
     {
+        OverlapIssue();
         if (DiceRoll.chance != player)
             return;
         DiceRoll.tempdice = DiceRoll.AllIN[player];
@@ -125,29 +127,28 @@ public class Pucks : MonoBehaviour
         dice = value;
         if (!inHome && DiceRoll.AllIN[player] > 0 && dice != 5)
         {
-            if (count + dice >= 57)
+            if (count + dice > 57)
                 StartCoroutine("ChangingTurn");
             else
                 StartCoroutine("AutoRunning");
         }
-        else if (dice == 5 && DiceRoll.AllIN[player] == 0 && gameObject.name.Contains("1"))
-        {
-            Debug.Log("Auto " + gameObject.name);
-            StartCoroutine("AutoRun");
-        }
+        // else if (dice == 5 && DiceRoll.AllIN[player] == 0 && gameObject.name.Contains("1"))
+        // {
+        //     Debug.Log("Auto " + gameObject.name);
+        //     StartCoroutine("AutoRun");
+        // }
         // else if (DiceRoll.AllIN[player] == 1 && !inHome && dice != 5 && count+dice<57)
         // {
         //     Debug.Log("Automove " + gameObject.name);
         //     StartCoroutine("MovePlayer");
         // }
-        if (DiceRoll.Overlap[player])
-        {
-            return;
-        }
         //Debug.Log(dice);
     }
     IEnumerator MovePlayer()
     {
+        if(OverlapFixed != null){
+            OverlapFixed();
+        }
         for (int i = 0; i <= dice; i++)
         {
             if (i == dice)
@@ -166,12 +167,12 @@ public class Pucks : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(0.3f);
-        if (count == 58)
+        if (count == 57)
         {
-            gameObject.GetComponent<BoxCollider>().enabled = false;
             DiceRoll.Completed[player] += 1;
             DiceRoll.AllIN[player] -= 1;
             GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
+            gameObject.GetComponent<Pucks>().enabled = false;
         }
         else if (dice == 5 || !alive)
             GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
@@ -208,5 +209,16 @@ public class Pucks : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (DiceRoll.tempdice2 == 1)
             StartCoroutine("MovePlayer");
+    }
+    void OverlapIssue(){
+        if(player==DiceRoll.chance)
+            gameObject.GetComponent<BoxCollider>().enabled=true;
+        else
+        {
+            gameObject.GetComponent<BoxCollider>().enabled=false;
+        }
+    }
+    void OverlapFix(){
+        gameObject.GetComponent<BoxCollider>().enabled=true;
     }
 }

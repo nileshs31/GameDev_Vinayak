@@ -14,7 +14,6 @@ public class DiceRoll : MonoBehaviour
     public static Action<int> Rolled; //Updating dice value to all pucks
     public static bool OnlyOne = true; //when two puck on same point
     int[] BadLuck; // Six not comming
-    public static bool[] Overlap;
     public static int tempdice=1,tempdice2=0;
 
     void Start()
@@ -25,7 +24,6 @@ public class DiceRoll : MonoBehaviour
         AllIN = new int[4];
         Completed = new int[4];
         BadLuck = new int[4];
-        Overlap= new bool[4];
         // for (int i = 0; i < 4; i++)
         // {
         //     AllIN[i] = 0;
