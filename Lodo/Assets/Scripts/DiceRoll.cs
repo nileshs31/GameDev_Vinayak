@@ -86,12 +86,13 @@ public class DiceRoll : MonoBehaviour
         Debug.Log("Changed turn ");
         turn = 0; //Dice Turn
         DicePlaceHolder[chance].SetActive(false);
+        Turner:
         chance += 1; // next player chance
-        if(Completed[chance]==4){
-            chance+=1;
-        }
         if (chance == MaxPlayer)
             chance = 0;
+        if(Completed[chance]==4){
+            goto Turner;
+        }
         gameObject.transform.position = DicePlaceHolder[chance].transform.position;
         DicePlaceHolder[chance].SetActive(true);
         gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[0]);
