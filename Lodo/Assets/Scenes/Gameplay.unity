@@ -220,6 +220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -846,6 +850,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -1277,6 +1285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -2437,6 +2449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -2786,6 +2802,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -3382,6 +3402,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -3497,7 +3521,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607492268}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 2.95, y: 0.49, z: 0.09999611}
+  m_LocalPosition: {x: 2.44, y: 0.49, z: 0.09999611}
   m_LocalScale: {x: 0.49424383, y: 0.49517268, z: 0.48841175}
   m_Children: []
   m_Father: {fileID: 1935374629}
@@ -4326,6 +4350,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -4511,6 +4539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -5282,7 +5314,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923503286}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.46, y: -2.95, z: 0.09999611}
+  m_LocalPosition: {x: 0.46, y: -2.46, z: 0.09999611}
   m_LocalScale: {x: 0.49424383, y: 0.49517268, z: 0.48841175}
   m_Children: []
   m_Father: {fileID: 1935374629}
@@ -5501,6 +5533,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -5698,7 +5734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978191741}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: -0.51, y: 2.98, z: 0.09999611}
+  m_LocalPosition: {x: -0.51, y: 2.47, z: 0.09999611}
   m_LocalScale: {x: 0.49424383, y: 0.49517268, z: 0.48841175}
   m_Children: []
   m_Father: {fileID: 1935374629}
@@ -5881,6 +5917,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -6312,6 +6352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -7138,6 +7182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -7569,6 +7617,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -8186,6 +8238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -9683,6 +9739,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -10426,7 +10486,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954836494}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: -2.99, y: -0.47, z: 0.09999611}
+  m_LocalPosition: {x: -2.52, y: -0.47, z: 0.09999611}
   m_LocalScale: {x: 0.49424383, y: 0.49517268, z: 0.48841175}
   m_Children: []
   m_Father: {fileID: 1935374629}
@@ -12012,6 +12072,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58054c1c69a735a4e83aa67ea166741f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: 0
+  dice: 0
+  count: 0
+  place: 0
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
