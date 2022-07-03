@@ -7,6 +7,7 @@ public class TitleManager : MonoBehaviour
 {
     public GameObject BackButton,OnlineButton,OfflineButton,player2,player3,player4,Quitbutton;
     public static int playercount=4;
+    int screen=0;
 
     private void OnEnable() {
         DontDestroyOnLoad(gameObject);
@@ -24,6 +25,7 @@ public class TitleManager : MonoBehaviour
         Application.Quit();
     }
     public void Back(){
+        screen=1;
         BackButton.SetActive(false);
         player2.SetActive(false);
         player3.SetActive(false);
@@ -42,5 +44,17 @@ public class TitleManager : MonoBehaviour
     }
     public void P4(){
         SceneManager.LoadScene("Gameplay");
+    }
+    private void Update() {
+        if(Input.GetKey(KeyCode.Escape)){
+            switch(screen){
+                case 0: Quit();
+                break;
+                case 1: Back();
+                        screen=0;
+                break;
+                default: break;
+            }
+        }
     }
 }

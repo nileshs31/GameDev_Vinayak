@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public GameObject[] SafePointes,WinOverlay,BluePucks,YellowPucks;
+    public GameObject Menu;
     public int[] AllIN,Completed;
     public static int tempdice=1,tempdice2=0;
-
+    int screen=0;
     void Start()
     {
         AllIN = new int[4];
@@ -25,6 +27,11 @@ public class GameController : MonoBehaviour
                     //YellowRemover();
                     break;
             default: break;
+        }
+    }
+    private void Update() {
+        if(Input.GetKey(KeyCode.Escape)){
+            back();
         }
     }
     private void OnEnable() {
@@ -57,5 +64,17 @@ public class GameController : MonoBehaviour
         for(int i=0; i<4;i++){
             Destroy(YellowPucks[i]);
         }
+    }
+    public void back(){
+        if(screen==0){
+        Menu.SetActive(true);
+        screen=1;
+        }
+        else
+        SceneManager.LoadScene("TitleScreen");
+    }
+    public void Resume(){
+        screen=0;
+        Menu.SetActive(false);
     }
 }
