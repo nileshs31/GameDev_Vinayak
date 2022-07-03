@@ -12,11 +12,12 @@ public class Pucks : MonoBehaviour
     bool alive = false; //To Detect Collisions in MovePlayer
     GameObject Parent; //For Routing Last Route of each color
     public static Action OverlapFixed;
+    GameController gc;
     void Start()
     {
         DiceRoll.Rolled += Dicenumber;
         OverlapFixed += OverlapFix;
-        //PrivateRoute=new GameObject[6];
+        gc=GameObject.Find("GameManager").GetComponent<GameController>();
         Origin = transform.position;
         if (gameObject.name.Contains("Red"))
         {
@@ -74,7 +75,7 @@ public class Pucks : MonoBehaviour
                 }
                 count = 0;
                 inHome = true;
-                DiceRoll.AllIN[player] -= 1;
+                gc.AllIN[player] -= 1;
             }
             if (alive) //Who Killed
                 StartCoroutine("MakeAlive");
@@ -87,18 +88,18 @@ public class Pucks : MonoBehaviour
     }
     void OnMouseUp()
     {
-        if (DiceRoll.turn == 0 || DiceRoll.chance != player || (DiceRoll.AllIN[player] == 1 && dice != 5))
+        if (DiceRoll.turn == 0 || DiceRoll.chance != player || (gc.AllIN[player] == 1 && dice != 5))
         {
             return;
         }
-        else if (!inHome && DiceRoll.AllIN[player]==1 && dice == 5 && DiceRoll.Completed[player]==3)
+        else if (!inHome && gc.AllIN[player]==1 && dice == 5 && gc.Completed[player]==3)
             return;
         else if (inHome && dice == 5) // Choose player to deploy in feild
         {
             transform.position = PublicRoute[place].transform.position;
             GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
             inHome = false;
-            DiceRoll.AllIN[player] += 1;
+            gc.AllIN[player] += 1;
             count += 1;
         }
         else if (DiceRoll.OnlyOne && !inHome && count + dice < 57) 
@@ -112,17 +113,23 @@ public class Pucks : MonoBehaviour
         OverlapIssue(); //Disable all Colliders except Player whose chance is this
         if (DiceRoll.chance != player)
             return;
-        DiceRoll.tempdice = DiceRoll.AllIN[player];
+        DiceRoll.tempdice = gc.AllIN[player];
         dice = value;
-        if (!inHome && DiceRoll.AllIN[player] > 0 && dice != 5)
+        if (!inHome && gc.AllIN[player] > 0 && dice != 5)
         {
             if (count + dice >= 57)
                 StartCoroutine("ChangingTurn");
             else
                 StartCoroutine("AutoRunning");
         }
-        else if (!inHome && DiceRoll.AllIN[player]==1 && dice == 5 && DiceRoll.Completed[player]==3){ //Only One Remaining
-            StartCoroutine("AutoRun");
+        // else if (!inHome && DiceRoll.AllIN[player]==0 && dice == 5 && DiceRoll.Completed[player]==3){ //Only One Remaining
+        //     StartCoroutine("AutoRun");
+        // }
+        else if (!inHome && gc.AllIN[player]+gc.Completed[player]==4 && dice == 5){ //All Out
+            if (count + dice >= 57)
+                StartCoroutine("ChangingTurn");
+            else
+                StartCoroutine("AutoRunning");
         }
     }
     IEnumerator MovePlayer()
@@ -149,10 +156,15 @@ public class Pucks : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         if (count == 57) //Reached Destination
         {
-            DiceRoll.Completed[player] += 1;
-            DiceRoll.AllIN[player] -= 1;
+            gc.Completed[player] += 1;
+            gc.AllIN[player] -= 1;
             DiceRoll.Rolled -= Dicenumber;
             OverlapFixed -= OverlapFix;
+            if(gc.Completed[player]==4){
+            gc.WinOverlayer(player);
+            GameObject.Find("Dice").GetComponent<DiceRoll>().changeTurn();
+            }
+            else
             GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
             gameObject.GetComponent<Pucks>().enabled = false;
         }
@@ -174,7 +186,7 @@ public class Pucks : MonoBehaviour
         transform.position = PublicRoute[place].transform.position;
         GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
         inHome = false;
-        DiceRoll.AllIN[player] += 1;
+        gc.AllIN[player] += 1;
         count += 1;
     }
     IEnumerator ChangingTurn()
