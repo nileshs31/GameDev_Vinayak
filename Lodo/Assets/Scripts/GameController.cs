@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject[] SafePointes,WinOverlay,BluePucks,YellowPucks;
+    public GameObject[] SafePointes,WinOverlay,BluePucks,YellowPucks,GreenPucks;
     public GameObject Menu;
     public int[] AllIN,Completed;
-    public static int tempdice=1,tempdice2=0;
+    public Pucks[] AllPucks;
     int screen=0;
     void Start()
     {
@@ -17,16 +17,27 @@ public class GameController : MonoBehaviour
         switch(TitleManager.playercount){
             case 2: Completed[1]=4;
                     WinOverlayer(1);
-                    //BlueRemover();
                     Completed[3]=4;
                     WinOverlayer(3);
-                    //YellowRemover();
                     break;
             case 3: Completed[3]=4;
                     WinOverlayer(3);
-                    //YellowRemover();
                     break;
-            default: break;
+        }
+        if(TitleManager.AIblue){
+            for(int i=0; i<4;i++){
+                BluePucks[i].GetComponent<AI>().enabled=true;
+            }
+        }
+        if(TitleManager.AIyellow){
+            for(int i=0; i<4;i++){
+                YellowPucks[i].GetComponent<AI>().enabled=true;
+            }
+        }
+        if(TitleManager.AIgreen){
+            for(int i=0; i<4;i++){
+                GreenPucks[i].GetComponent<AI>().enabled=true;
+            }
         }
     }
     private void Update() {
@@ -54,16 +65,6 @@ public class GameController : MonoBehaviour
         WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
         else
         WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text+=pos;
-    }
-    public void BlueRemover(){
-        for(int i=0; i<4;i++){
-            Destroy(BluePucks[i]);
-        }
-    }
-    public void YellowRemover(){
-        for(int i=0; i<4;i++){
-            Destroy(YellowPucks[i]);
-        }
     }
     public void back(){
         if(screen==0){

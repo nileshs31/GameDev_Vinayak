@@ -6,13 +6,16 @@ using UnityEngine;
 public class Pucks : MonoBehaviour
 {
     public int player = 0, dice, count = 0, place;
-    bool inHome = true;
+    public bool inHome = true;
     Vector2 Origin;
     public GameObject[] PublicRoute;
-    bool alive = false; //To Detect Collisions in MovePlayer
+    public bool alive = false; //To Detect Collisions in MovePlayer
     GameObject Parent; //For Routing Last Route of each color
     public static Action OverlapFixed;
     GameController gc;
+    private void OnEnable() {
+        OverlapFixed=null;
+    }
     void Start()
     {
         DiceRoll.Rolled += Dicenumber;
@@ -80,33 +83,16 @@ public class Pucks : MonoBehaviour
             if (alive) //Who Killed
                 StartCoroutine("MakeAlive");
         }
-        else //Overlap with same player or Safe Position
-        {
-            gameObject.GetComponent<BoxCollider>().isTrigger = true;
-            other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
-        }
+        // else //Overlap with same player or Safe Position
+        // {
+        //     gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        //     other.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        // }
     }
     void OnMouseUp()
     {
-        if (DiceRoll.turn == 0 || DiceRoll.chance != player || (gc.AllIN[player] == 1 && dice != 5))
-        {
-            return;
-        }
-        else if (!inHome && gc.AllIN[player]==1 && dice == 5 && gc.Completed[player]==3)
-            return;
-        else if (inHome && dice == 5) // Choose player to deploy in feild
-        {
-            transform.position = PublicRoute[place].transform.position;
-            GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
-            inHome = false;
-            gc.AllIN[player] += 1;
-            count += 1;
-        }
-        else if (DiceRoll.OnlyOne && !inHome && count + dice < 57) 
-        {
-            DiceRoll.OnlyOne = false;//Overlap Player Select only One
-            StartCoroutine("MovePlayer");
-        }
+        if(!DiceRoll.AItracker[player])
+        TryMove();
     }
     void Dicenumber(int value)  //Automatically Triggered by DiceRoll
     {
@@ -122,15 +108,13 @@ public class Pucks : MonoBehaviour
             else
                 StartCoroutine("AutoRunning");
         }
-        // else if (!inHome && DiceRoll.AllIN[player]==0 && dice == 5 && DiceRoll.Completed[player]==3){ //Only One Remaining
-        //     StartCoroutine("AutoRun");
-        // }
         else if (!inHome && gc.AllIN[player]+gc.Completed[player]==4 && dice == 5){ //All Out
             if (count + dice >= 57)
                 StartCoroutine("ChangingTurn");
             else
                 StartCoroutine("AutoRunning");
         }
+        DiceRoll.OnlyOne = true;
     }
     IEnumerator MovePlayer()
     {
@@ -151,9 +135,9 @@ public class Pucks : MonoBehaviour
             else if (place == 52)
                 place = 0;
             transform.position = PublicRoute[place].transform.position;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         if (count == 57) //Reached Destination
         {
             gc.Completed[player] += 1;
@@ -192,7 +176,7 @@ public class Pucks : MonoBehaviour
     IEnumerator ChangingTurn()
     {
         Debug.Log(gameObject.name +" Routine "+player);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.25f);
         DiceRoll.tempdice -= 1;
         if (DiceRoll.tempdice == 0){
             GameObject.Find("Dice").GetComponent<DiceRoll>().changeTurn();
@@ -202,7 +186,7 @@ public class Pucks : MonoBehaviour
     IEnumerator AutoRunning()
     {
         DiceRoll.tempdice2 += 1;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         if (DiceRoll.tempdice2 == 1)
             StartCoroutine("MovePlayer");
     }
@@ -216,5 +200,33 @@ public class Pucks : MonoBehaviour
     }
     void OverlapFix(){
         gameObject.GetComponent<BoxCollider>().enabled=true;
+    }
+    public void TryMove(){
+        if (DiceRoll.turn == 0 || DiceRoll.chance != player || (gc.AllIN[player] == 1 && dice != 5))
+        {
+            Debug.Log(gameObject.name + "Cantt" + DiceRoll.turn);
+            return;
+        }
+        else if (!inHome && gc.AllIN[player]==1 && dice == 5 && gc.Completed[player]==3)
+            {
+                Debug.Log(gameObject.name + "Cantt");
+                return;
+            }
+        else if (DiceRoll.OnlyOne && inHome && dice == 5) // Choose player to deploy in feild
+        {
+            Debug.Log(gameObject.name + "Out of home");
+            DiceRoll.OnlyOne=false;
+            transform.position = PublicRoute[place].transform.position;
+            GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
+            inHome = false;
+            gc.AllIN[player] += 1;
+            count += 1;
+        }
+        else if (DiceRoll.OnlyOne && !inHome && count + dice < 57) 
+        {
+            Debug.Log(gameObject.name + "moving");
+            DiceRoll.OnlyOne = false;//Overlap Player Select only One
+            StartCoroutine("MovePlayer");
+        }
     }
 }

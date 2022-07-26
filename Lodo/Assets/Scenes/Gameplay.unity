@@ -155,7 +155,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &6000021
 SpriteRenderer:
@@ -224,6 +224,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -283,6 +284,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &6000023
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -294,7 +296,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: -0.00000047683716, y: 0.00000023841858, z: 0.0000013411045}
 --- !u!54 &6000024
 Rigidbody:
@@ -766,6 +768,7 @@ GameObject:
   - component: {fileID: 79939854}
   - component: {fileID: 79939855}
   - component: {fileID: 79939856}
+  - component: {fileID: 79939857}
   m_Layer: 0
   m_Name: Yellow1
   m_TagString: Untagged
@@ -785,7 +788,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 3
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &79939853
 SpriteRenderer:
@@ -854,6 +857,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -913,6 +917,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &79939855
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -924,7 +929,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0.00000023841858, y: -0.00000023841858, z: 0.0000013411045}
 --- !u!54 &79939856
 Rigidbody:
@@ -942,6 +947,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &79939857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79939851}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &106044967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1218,7 @@ GameObject:
   - component: {fileID: 179748498}
   - component: {fileID: 179748499}
   - component: {fileID: 179748500}
+  - component: {fileID: 179748501}
   m_Layer: 0
   m_Name: Green4
   m_TagString: Untagged
@@ -1220,7 +1238,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &179748497
 SpriteRenderer:
@@ -1289,6 +1307,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -1348,6 +1367,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &179748499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1359,7 +1379,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0.00000047683716, y: 0, z: 0.0000013411045}
 --- !u!54 &179748500
 Rigidbody:
@@ -1377,6 +1397,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &179748501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179748495}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &190178676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2575,9 +2607,31 @@ MonoBehaviour:
   - {fileID: 1249380636}
   - {fileID: 2147442352}
   - {fileID: 740114949}
+  GreenPucks:
+  - {fileID: 762450481}
+  - {fileID: 1367660670}
+  - {fileID: 954903941}
+  - {fileID: 179748495}
   Menu: {fileID: 204094462}
   AllIN: 
   Completed: 
+  AllPucks:
+  - {fileID: 6000022}
+  - {fileID: 1001971855}
+  - {fileID: 1825687116}
+  - {fileID: 509511679}
+  - {fileID: 436796048}
+  - {fileID: 1489232200}
+  - {fileID: 598676321}
+  - {fileID: 1045353461}
+  - {fileID: 762450484}
+  - {fileID: 1367660673}
+  - {fileID: 954903944}
+  - {fileID: 179748498}
+  - {fileID: 79939854}
+  - {fileID: 1249380639}
+  - {fileID: 2147442355}
+  - {fileID: 740114952}
 --- !u!1 &412261095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +2727,7 @@ GameObject:
   - component: {fileID: 436796048}
   - component: {fileID: 436796049}
   - component: {fileID: 436796050}
+  - component: {fileID: 436796051}
   m_Layer: 0
   m_Name: Blue1
   m_TagString: Untagged
@@ -2692,7 +2747,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &436796047
 SpriteRenderer:
@@ -2761,6 +2816,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -2820,6 +2876,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &436796049
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2831,7 +2888,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0, y: -0.00000023841858, z: 0.0000013411045}
 --- !u!54 &436796050
 Rigidbody:
@@ -2849,6 +2906,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &436796051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436796045}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &461332285
 GameObject:
   m_ObjectHideFlags: 0
@@ -3045,7 +3114,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 15
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &509511678
 SpriteRenderer:
@@ -3114,6 +3183,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -3173,6 +3243,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &509511680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3184,7 +3255,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: -0.00000023841858, y: 0.00000023841858, z: 0.0000013411045}
 --- !u!54 &509511681
 Rigidbody:
@@ -3760,6 +3831,7 @@ GameObject:
   - component: {fileID: 598676321}
   - component: {fileID: 598676322}
   - component: {fileID: 598676323}
+  - component: {fileID: 598676324}
   m_Layer: 0
   m_Name: Blue3
   m_TagString: Untagged
@@ -3779,7 +3851,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &598676320
 SpriteRenderer:
@@ -3848,6 +3920,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -3907,6 +3980,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &598676322
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3918,7 +3992,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0, y: -0.00000023841858, z: 0.0000013411045}
 --- !u!54 &598676323
 Rigidbody:
@@ -3936,6 +4010,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &598676324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598676318}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &607492268
 GameObject:
   m_ObjectHideFlags: 0
@@ -4980,6 +5066,7 @@ GameObject:
   - component: {fileID: 740114952}
   - component: {fileID: 740114953}
   - component: {fileID: 740114954}
+  - component: {fileID: 740114955}
   m_Layer: 0
   m_Name: Yellow4
   m_TagString: Untagged
@@ -4999,7 +5086,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 9
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &740114951
 SpriteRenderer:
@@ -5068,6 +5155,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -5127,6 +5215,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &740114953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5138,7 +5227,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0.00000047683716, y: 0, z: 0.0000013411045}
 --- !u!54 &740114954
 Rigidbody:
@@ -5156,6 +5245,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &740114955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740114949}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &762450481
 GameObject:
   m_ObjectHideFlags: 0
@@ -5169,6 +5270,7 @@ GameObject:
   - component: {fileID: 762450484}
   - component: {fileID: 762450485}
   - component: {fileID: 762450486}
+  - component: {fileID: 762450487}
   m_Layer: 0
   m_Name: Green1
   m_TagString: Untagged
@@ -5188,7 +5290,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 1
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &762450483
 SpriteRenderer:
@@ -5257,6 +5359,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -5316,6 +5419,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &762450485
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5327,7 +5431,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0.00000023841858, y: 0, z: 0.0000013411045}
 --- !u!54 &762450486
 Rigidbody:
@@ -5345,6 +5449,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &762450487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762450481}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &779774387
 GameObject:
   m_ObjectHideFlags: 0
@@ -6242,6 +6358,7 @@ GameObject:
   - component: {fileID: 954903944}
   - component: {fileID: 954903945}
   - component: {fileID: 954903946}
+  - component: {fileID: 954903947}
   m_Layer: 0
   m_Name: Green3
   m_TagString: Untagged
@@ -6261,7 +6378,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &954903943
 SpriteRenderer:
@@ -6330,6 +6447,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -6389,6 +6507,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &954903945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6400,7 +6519,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0, y: -0.00000023841858, z: 0.0000013411045}
 --- !u!54 &954903946
 Rigidbody:
@@ -6418,6 +6537,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &954903947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954903941}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &960756485
 GameObject:
   m_ObjectHideFlags: 0
@@ -6773,7 +6904,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 13
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &1001971854
 SpriteRenderer:
@@ -6842,6 +6973,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -6901,6 +7033,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &1001971856
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6912,7 +7045,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: -0.00000047683716, y: 0, z: 0.0000013411045}
 --- !u!54 &1001971857
 Rigidbody:
@@ -7070,22 +7203,22 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 436796046}
-  - {fileID: 762450482}
   - {fileID: 6000020}
-  - {fileID: 79939852}
-  - {fileID: 1489232198}
-  - {fileID: 598676319}
-  - {fileID: 1045353459}
-  - {fileID: 1249380637}
-  - {fileID: 2147442353}
-  - {fileID: 740114950}
-  - {fileID: 1367660671}
-  - {fileID: 954903942}
-  - {fileID: 179748496}
   - {fileID: 1001971853}
   - {fileID: 1825687114}
   - {fileID: 509511677}
+  - {fileID: 436796046}
+  - {fileID: 1489232198}
+  - {fileID: 598676319}
+  - {fileID: 1045353459}
+  - {fileID: 762450482}
+  - {fileID: 1367660671}
+  - {fileID: 954903942}
+  - {fileID: 179748496}
+  - {fileID: 79939852}
+  - {fileID: 1249380637}
+  - {fileID: 2147442353}
+  - {fileID: 740114950}
   m_Father: {fileID: 1935374629}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7189,6 +7322,7 @@ GameObject:
   - component: {fileID: 1045353461}
   - component: {fileID: 1045353462}
   - component: {fileID: 1045353463}
+  - component: {fileID: 1045353464}
   m_Layer: 0
   m_Name: Blue4
   m_TagString: Untagged
@@ -7208,7 +7342,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1045353460
 SpriteRenderer:
@@ -7277,6 +7411,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -7336,6 +7471,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &1045353462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7347,7 +7483,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0, y: 0.00000047683716, z: 0.0000013411045}
 --- !u!54 &1045353463
 Rigidbody:
@@ -7365,6 +7501,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1045353464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045353458}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1048187144
 GameObject:
   m_ObjectHideFlags: 0
@@ -8414,6 +8562,7 @@ GameObject:
   - component: {fileID: 1249380639}
   - component: {fileID: 1249380640}
   - component: {fileID: 1249380641}
+  - component: {fileID: 1249380642}
   m_Layer: 0
   m_Name: Yellow2
   m_TagString: Untagged
@@ -8433,7 +8582,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 7
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &1249380638
 SpriteRenderer:
@@ -8502,6 +8651,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -8561,6 +8711,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &1249380640
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8572,7 +8723,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0.00000047683716, y: 0.00000023841858, z: 0.0000013411045}
 --- !u!54 &1249380641
 Rigidbody:
@@ -8590,6 +8741,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1249380642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249380636}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1250973573
 GameObject:
   m_ObjectHideFlags: 0
@@ -8983,6 +9146,7 @@ GameObject:
   - component: {fileID: 1367660673}
   - component: {fileID: 1367660674}
   - component: {fileID: 1367660675}
+  - component: {fileID: 1367660676}
   m_Layer: 0
   m_Name: Green2
   m_TagString: Untagged
@@ -9002,7 +9166,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1367660672
 SpriteRenderer:
@@ -9071,6 +9235,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -9130,6 +9295,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &1367660674
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9141,7 +9307,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0.00000023841858, y: -0.00000023841858, z: 0.0000013411045}
 --- !u!54 &1367660675
 Rigidbody:
@@ -9159,6 +9325,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1367660676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367660670}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1372704116
 GameObject:
   m_ObjectHideFlags: 0
@@ -9604,6 +9782,7 @@ GameObject:
   - component: {fileID: 1489232200}
   - component: {fileID: 1489232201}
   - component: {fileID: 1489232202}
+  - component: {fileID: 1489232203}
   m_Layer: 0
   m_Name: Blue2
   m_TagString: Untagged
@@ -9623,7 +9802,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1489232199
 SpriteRenderer:
@@ -9692,6 +9871,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -9751,6 +9931,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &1489232201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9762,7 +9943,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0, y: 0.00000047683716, z: 0.0000013411045}
 --- !u!54 &1489232202
 Rigidbody:
@@ -9780,6 +9961,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1489232203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489232197}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1497739952
 GameObject:
   m_ObjectHideFlags: 0
@@ -11203,7 +11396,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 14
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &1825687115
 SpriteRenderer:
@@ -11272,6 +11465,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -11331,6 +11525,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &1825687117
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11342,7 +11537,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0, y: 0, z: 0.0000013411045}
 --- !u!54 &1825687118
 Rigidbody:
@@ -13984,6 +14179,7 @@ GameObject:
   - component: {fileID: 2147442355}
   - component: {fileID: 2147442356}
   - component: {fileID: 2147442357}
+  - component: {fileID: 2147442358}
   m_Layer: 0
   m_Name: Yellow3
   m_TagString: Untagged
@@ -14003,7 +14199,7 @@ Transform:
   m_LocalScale: {x: 0.49424383, y: 0.49517265, z: 0.48841178}
   m_Children: []
   m_Father: {fileID: 1030391461}
-  m_RootOrder: 8
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &2147442354
 SpriteRenderer:
@@ -14072,6 +14268,7 @@ MonoBehaviour:
   dice: 0
   count: 0
   place: 0
+  inHome: 1
   PublicRoute:
   - {fileID: 1336103743}
   - {fileID: 644978045}
@@ -14131,6 +14328,7 @@ MonoBehaviour:
   - {fileID: 1306315736}
   - {fileID: 1306315736}
   - {fileID: 1306315736}
+  alive: 0
 --- !u!65 &2147442356
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14142,7 +14340,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.19999997}
+  m_Size: {x: 0.9, y: 0.9, z: 0.19999997}
   m_Center: {x: 0.00000023841858, y: 0, z: 0.0000013411045}
 --- !u!54 &2147442357
 Rigidbody:
@@ -14160,3 +14358,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &2147442358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147442352}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

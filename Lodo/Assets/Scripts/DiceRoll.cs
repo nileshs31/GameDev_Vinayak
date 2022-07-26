@@ -8,43 +8,47 @@ public class DiceRoll : MonoBehaviour
     public GameObject[] DicePlaceHolder;
     public Sprite[] DiceNumber;
     public static int chance; //Which Player's Chance
-    public static int turn = 0; //Dice or Puck
+    public static int turn; //Dice or Puck
     public static Action<int> Rolled; //Updating dice value to all pucks
-    public static bool OnlyOne = true; //when two puck on same point
+    public static bool OnlyOne; //when two puck on same point
     int[] BadLuck; // Six not comming
-    public static int tempdice=1,tempdice2=0;
+    public static int tempdice,tempdice2;
     GameController gc;
-
+    public static bool[] AItracker;
+    public static Action AIroller;
+    private void OnEnable() {
+        Rolled=null;
+        AIroller=null;
+    }
     void Start()
     {
+        OnlyOne = true;
+        tempdice=1;
+        tempdice2=0;
+        turn = 0;
         gc=GameObject.Find("GameManager").GetComponent<GameController>();
         chance = 0;
         DicePlaceHolder[0].SetActive(true);
         gameObject.transform.position = DicePlaceHolder[0].transform.position;
         BadLuck = new int[4];
-        // for (int i = 0; i < 4; i++)
-        // {
-        //     AllIN[i] = 0;
-        // }
+        AItracker = new bool[4];
+        AItracker[0]=false;
+        AItracker[1]=TitleManager.AIblue;
+        AItracker[2]=TitleManager.AIgreen;
+        AItracker[3]=TitleManager.AIyellow;
     }
     void OnMouseDown()
     {
-        if (turn == 0) //Dice turn
-            gameObject.GetComponent<Animator>().enabled = true;
+        if(!AItracker[chance])
+        Spin();
     }
     void OnMouseUp()
     {
-        if (turn == 0) //Dice turn
-        {
-            tempdice=1;
-            tempdice2=0;
-            StartCoroutine("Roll");
-            gameObject.GetComponent<BoxCollider2D>().enabled=false;
-        }
+        if(!AItracker[chance])
+        SpinOff();
     }
     IEnumerator Roll()
     {
-        //Debug.Log(chance);
         var temp = UnityEngine.Random.Range(0, 6);
         if (temp == 5)
             BadLuck[chance] = 0; //player got six
@@ -56,25 +60,27 @@ public class DiceRoll : MonoBehaviour
             {
                 temp = UnityEngine.Random.Range(0, 6);
                 if (temp == 5)
-                    i = BadLuck[chance];
+                    break;
             }
         }
-        if(temp==5 && BadLuck[chance] != -4)
+        if(temp==5 && BadLuck[chance] != -2)
             BadLuck[chance] = -4;
-        else if(temp==5 && BadLuck[chance] == -8)
-            temp = UnityEngine.Random.Range(0, 5);
+        else if(temp==5 && BadLuck[chance] == -4)
+        {
+            temp=UnityEngine.Random.Range(0,5);
+        }
         else if(temp == 5)
-            BadLuck[chance] -= 4;
-        yield return new WaitForSeconds(0.31f);
+            BadLuck[chance] = -1;
+        yield return new WaitForSeconds(0.4f);
         gameObject.GetComponent<Animator>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[temp]);
-        //Debug.Log(chance);
-        if (Rolled != null)
+        if (Rolled != null) //Autorun in Puck script
         {
             Rolled(temp);
         }
         if (temp == 5 || gc.AllIN[chance] != 0)
         {
+            Debug.Log(gc.AllIN[chance]);
             turn = 1; //Playable
         }
         else
@@ -82,7 +88,11 @@ public class DiceRoll : MonoBehaviour
             yield return new WaitForSeconds(0.31f);
             changeTurn();
         }
-        //Debug.Log(chance);
+        if(AIroller!=null && AItracker[chance]) //Autorun in AI script
+        {
+            Debug.Log("Calling Ai Roller");
+            StartCoroutine("DelayedAI");
+        } 
     }
     public void changeTurn()
     {
@@ -100,6 +110,10 @@ public class DiceRoll : MonoBehaviour
         DicePlaceHolder[chance].SetActive(true);
         gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[0]);
         gameObject.GetComponent<BoxCollider2D>().enabled=true;
+        Debug.Log(chance);
+        if(AItracker[chance]){
+            StartCoroutine("DelayedSpin");
+        }
     }
     public void ReThrow()
     {
@@ -107,5 +121,30 @@ public class DiceRoll : MonoBehaviour
         turn = 0;
         gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[0]);
         gameObject.GetComponent<BoxCollider2D>().enabled=true;
+        if(AItracker[chance]){
+            StartCoroutine("DelayedSpin");
+        }
+    }
+    public void Spin(){
+        if (turn == 0) //Dice turn
+            gameObject.GetComponent<Animator>().enabled = true;
+    }
+    public void SpinOff(){
+        if (turn == 0) //Dice turn
+        {
+            tempdice=1;
+            tempdice2=0;
+            StartCoroutine("Roll");
+            gameObject.GetComponent<BoxCollider2D>().enabled=false;
+        }
+    }
+    IEnumerator DelayedSpin(){
+        yield return new WaitForSeconds(0.25f);
+        Spin();
+        SpinOff();
+    }
+    IEnumerator DelayedAI(){
+        yield return new WaitForSeconds(0.1f);
+        AIroller();
     }
 }
