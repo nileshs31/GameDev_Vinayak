@@ -80,7 +80,7 @@ public class DiceRoll : MonoBehaviour
         }
         if (temp == 5 || gc.AllIN[chance] != 0)
         {
-            Debug.Log(gc.AllIN[chance]);
+            //Debug.Log(gc.AllIN[chance]);
             turn = 1; //Playable
         }
         else
@@ -90,13 +90,13 @@ public class DiceRoll : MonoBehaviour
         }
         if(AIroller!=null && AItracker[chance]) //Autorun in AI script
         {
-            Debug.Log("Calling Ai Roller");
+            //Debug.Log("Calling Ai Roller");
             StartCoroutine("DelayedAI");
         } 
     }
     public void changeTurn()
     {
-        Debug.Log("Changed turn ");
+        //Debug.Log("Changed turn ");
         turn = 0; //Dice Turn
         DicePlaceHolder[chance].SetActive(false);
         Turner:
@@ -110,14 +110,14 @@ public class DiceRoll : MonoBehaviour
         DicePlaceHolder[chance].SetActive(true);
         gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[0]);
         gameObject.GetComponent<BoxCollider2D>().enabled=true;
-        Debug.Log(chance);
+        //Debug.Log(chance);
         if(AItracker[chance]){
             StartCoroutine("DelayedSpin");
         }
     }
     public void ReThrow()
     {
-        Debug.Log("Roll Again");
+        //Debug.Log("Roll Again");
         turn = 0;
         gameObject.GetComponent<SpriteRenderer>().sprite = (DiceNumber[0]);
         gameObject.GetComponent<BoxCollider2D>().enabled=true;

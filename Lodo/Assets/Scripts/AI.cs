@@ -64,7 +64,7 @@ public class AI : MonoBehaviour
                         return;
                     }
                 }
-            Debug.Log("AI Reset");
+            //Debug.Log("AI Reset");
             StopCoroutine("SelectRandom");
             StartCoroutine("SelectRandom",0.3f);
         }
