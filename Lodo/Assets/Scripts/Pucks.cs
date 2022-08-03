@@ -55,11 +55,11 @@ public class Pucks : MonoBehaviour
     {
         if(other.gameObject.transform.parent.name=="SafePos") //Safe Position
         {
-            if(!alive)
+            if(!alive) //Puck is stiil moving
             return;
             inCircle=int.Parse(other.gameObject.name);
             gc.CircleHold(inCircle,gameObject.name);
-            gameObject.GetComponent<BoxCollider>().isTrigger = true; //Dont Take Collisions
+            gameObject.GetComponent<BoxCollider>().isTrigger = true; //Dont Take Collisions now
         }
         else if (other.gameObject.GetComponent<Pucks>().player != player)
         {
@@ -123,7 +123,7 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator MovePlayer()
     {
-        if(inCircle!=0){
+        if(inCircle!=0){    //Holding a Cicle
             gc.CircleLeave(inCircle,gameObject.name);
             normal();
             inCircle=0;
