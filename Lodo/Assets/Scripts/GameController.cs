@@ -5,16 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject[] SafePointes,WinOverlay,BluePucks,YellowPucks,GreenPucks;
+    public GameObject[] PucksAll,SafePointes,WinOverlay,BluePucks,YellowPucks,GreenPucks;
     public GameObject Menu;
     public int[] AllIN,Completed,CircleOn;  //CicleOn - count of pucks on circle;
     public Pucks[] AllPucks;
+    Vector3 Smallscale,LargeCollider;
     int screen=0,pos=0;
     List<string>[] InCircle;    //List of Puck's name present in current cicle;
     List<int> VerticalCircles;  //List of Circles on Vertical Path
     IDictionary<string,int> PuckRef;    //Mapping of Puck'n name with their reference in ALLPucks
     void Start()
     {
+        LargeCollider=new Vector3(1.5f,1.5f,1.5f);
+        Smallscale=new Vector3(0.25f,0.25f,0.25f);
         PuckRef=new Dictionary<string,int>(){
             {"Red1",0},
             {"Red2",1},
@@ -117,55 +120,55 @@ public class GameController : MonoBehaviour
     void Adjuster(int index){   //Adjusts the scale, position, and collider size of pucks 
         switch(CircleOn[index]){
             case 1:{    //Normal Puck size/pos
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position;
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.localScale=new Vector3(0.49f,0.49f,0.49f);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position;
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=new Vector3(0.49f,0.49f,0.49f);
                     break;
             }
             case 2:{    //shift by 0.25f
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][0]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
+                    PucksAll[PuckRef[InCircle[index][1]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
                 if(VerticalCircles.Contains(index)){    //shift up and down
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
                 }
                 else{   //shift left and right
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
                 }
                     break;
             }
             case 3:{    //2 pucks shift 1 stays original pos
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][2]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    AllPucks[PuckRef[InCircle[index][2]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][2]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][0]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
+                    PucksAll[PuckRef[InCircle[index][1]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
+                    PucksAll[PuckRef[InCircle[index][2]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
                 if(VerticalCircles.Contains(index)){
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
                 }
                 else{
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
                 }
                     break;
             }
             case 4:{    
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][2]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][3]]].gameObject.transform.localScale=new Vector3(0.25f,0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,-0.25f);
-                    AllPucks[PuckRef[InCircle[index][2]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,-0.25f);
-                    AllPucks[PuckRef[InCircle[index][3]]].gameObject.transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,0.25f);
-                    AllPucks[PuckRef[InCircle[index][0]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    AllPucks[PuckRef[InCircle[index][1]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    AllPucks[PuckRef[InCircle[index][2]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    AllPucks[PuckRef[InCircle[index][3]]].gameObject.GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][2]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][3]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0.25f);
+                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,-0.25f);
+                    PucksAll[PuckRef[InCircle[index][2]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,-0.25f);
+                    PucksAll[PuckRef[InCircle[index][3]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,0.25f);
+                    PucksAll[PuckRef[InCircle[index][0]]].GetComponent<BoxCollider>().size=LargeCollider;
+                    PucksAll[PuckRef[InCircle[index][1]]].GetComponent<BoxCollider>().size=LargeCollider;
+                    PucksAll[PuckRef[InCircle[index][2]]].GetComponent<BoxCollider>().size=LargeCollider;
+                    PucksAll[PuckRef[InCircle[index][3]]].GetComponent<BoxCollider>().size=LargeCollider;
                     break;
             }
         }

@@ -2583,6 +2583,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745fc44d7bf1b9b42aecf39b854f2e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PucksAll:
+  - {fileID: 6000019}
+  - {fileID: 1001971852}
+  - {fileID: 1825687113}
+  - {fileID: 509511676}
+  - {fileID: 436796045}
+  - {fileID: 1489232197}
+  - {fileID: 598676318}
+  - {fileID: 1045353458}
+  - {fileID: 762450481}
+  - {fileID: 1367660670}
+  - {fileID: 954903941}
+  - {fileID: 179748495}
+  - {fileID: 79939851}
+  - {fileID: 1249380636}
+  - {fileID: 2147442352}
+  - {fileID: 740114949}
   SafePointes:
   - {fileID: 923503286}
   - {fileID: 23622898}

@@ -13,7 +13,7 @@ public class Pucks : MonoBehaviour
     GameObject Parent; //For Routing Last Route of each color
     public static Action OverlapFixed;
     GameController gc;
-    int inCircle=0;
+    int inCircle=-1;
     private void OnEnable() {
         OverlapFixed=null;
     }
@@ -123,10 +123,10 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator MovePlayer()
     {
-        if(inCircle!=0){    //Holding a Cicle
+        if(inCircle!=-1){    //Holding a Cicle
             gc.CircleLeave(inCircle,gameObject.name);
             normal();
-            inCircle=0;
+            inCircle=-1;
         }
         if(OverlapFixed != null){
             OverlapFixed(); //Renabling Colliders
