@@ -7,15 +7,19 @@ public class GameController : MonoBehaviour
 {
     public GameObject[] PucksAll,SafePointes,WinOverlay,BluePucks,YellowPucks,GreenPucks;
     public GameObject Menu;
-    public int[] AllIN,Completed,CircleOn;  //CicleOn - count of pucks on circle;
+    public int[] AllIN,Completed,CountOnCircle,PucksOnUnSafe;  //CicleOn - count of pucks on circle;
     public Pucks[] AllPucks;
+    public string[] Lefter,Righter,Middler; //For UnsafeCollision
     Vector3 Smallscale,LargeCollider;
     int screen=0,pos=0;
-    List<string>[] InCircle;    //List of Puck's name present in current cicle;
+    List<string>[] PucksInCircle;    //List of Puck's name present in current cicle;
     List<int> VerticalCircles;  //List of Circles on Vertical Path
     IDictionary<string,int> PuckRef;    //Mapping of Puck'n name with their reference in ALLPucks
     void Start()
     {
+        Lefter = new string[4];
+        Middler = new string[4];
+        Righter = new string[4];
         LargeCollider=new Vector3(1.5f,1.5f,1.5f);
         Smallscale=new Vector3(0.25f,0.25f,0.25f);
         PuckRef=new Dictionary<string,int>(){
@@ -37,13 +41,14 @@ public class GameController : MonoBehaviour
             {"Yellow4",15},
         };
         VerticalCircles=new List<int>(){2,3,6,7};
-        InCircle=new List<string>[8];
+        PucksInCircle=new List<string>[8];
         for(int i=0;i<8;i++){
-            InCircle[i]=new List<string>();
+            PucksInCircle[i]=new List<string>();
         }
         AllIN = new int[4];
         Completed = new int[4];
-        CircleOn = new int[8];
+        CountOnCircle = new int[8];
+        PucksOnUnSafe = new int[4];
         switch(TitleManager.playercount){
             case 2: Completed[1]=4;
                     WinOverlayer(1);
@@ -108,67 +113,60 @@ public class GameController : MonoBehaviour
         Menu.SetActive(false);
     }
     public void CircleHold(int CircleNumber, string objectname){    //Called when Puck Collides with Circle (OnCollisionEnter)
-        InCircle[CircleNumber].Add(objectname);
-        CircleOn[CircleNumber]+=1;
+        PucksInCircle[CircleNumber].Add(objectname);
+        if(CountOnCircle[CircleNumber]==0)
+        CountOnCircle[CircleNumber]+=1;
+        else{
+        CountOnCircle[CircleNumber]+=1;
+        PucksAll[PuckRef[objectname]].transform.localScale=Smallscale;
+        PucksAll[PuckRef[objectname]].GetComponent<BoxCollider>().size=LargeCollider;
         Adjuster(CircleNumber);
+        }
     }
     public void CircleLeave(int CircleNumber, string objectname){   //Called when Puck Leaves the Circle (Pucks.MovePlayer)
-        InCircle[CircleNumber].Remove(objectname);
-        CircleOn[CircleNumber]-=1;
+        PucksAll[PuckRef[objectname]].transform.localScale=new Vector3(0.49f,0.49f,0.49f);
+        PucksAll[PuckRef[objectname]].GetComponent<BoxCollider>().size=new Vector3(0.85f,0.85f,0.85f);
+        PucksInCircle[CircleNumber].Remove(objectname);
+        CountOnCircle[CircleNumber]-=1;
         Adjuster(CircleNumber);
     }
     void Adjuster(int index){   //Adjusts the scale, position, and collider size of pucks 
-        switch(CircleOn[index]){
+        switch(CountOnCircle[index]){
             case 1:{    //Normal Puck size/pos
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position;
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=new Vector3(0.49f,0.49f,0.49f);
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position;
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.localScale=new Vector3(0.49f,0.49f,0.49f);
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].GetComponent<BoxCollider>().size=new Vector3(0.85f,0.85f,0.85f);
                     break;
             }
-            case 2:{    //shift by 0.25f
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][0]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    PucksAll[PuckRef[InCircle[index][1]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                if(VerticalCircles.Contains(index)){    //shift up and down
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
-                }
-                else{   //shift left and right
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
-                }
-                    break;
-            }
-            case 3:{    //2 pucks shift 1 stays original pos
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][2]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][0]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    PucksAll[PuckRef[InCircle[index][1]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
-                    PucksAll[PuckRef[InCircle[index][2]]].GetComponent<BoxCollider>().size=new Vector3(1.5f,1.5f,1.5f);
+            case 2:{
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.localScale=Smallscale;
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].GetComponent<BoxCollider>().size=LargeCollider;
                 if(VerticalCircles.Contains(index)){
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
+                    PucksAll[PuckRef[PucksInCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
                 }
                 else{
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
+                    PucksAll[PuckRef[PucksInCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
                 }
-                    break;
+                break;
             }
-            case 4:{    
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][2]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][3]]].transform.localScale=Smallscale;
-                    PucksAll[PuckRef[InCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0.25f);
-                    PucksAll[PuckRef[InCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,-0.25f);
-                    PucksAll[PuckRef[InCircle[index][2]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,-0.25f);
-                    PucksAll[PuckRef[InCircle[index][3]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,0.25f);
-                    PucksAll[PuckRef[InCircle[index][0]]].GetComponent<BoxCollider>().size=LargeCollider;
-                    PucksAll[PuckRef[InCircle[index][1]]].GetComponent<BoxCollider>().size=LargeCollider;
-                    PucksAll[PuckRef[InCircle[index][2]]].GetComponent<BoxCollider>().size=LargeCollider;
-                    PucksAll[PuckRef[InCircle[index][3]]].GetComponent<BoxCollider>().size=LargeCollider;
+            case 3:{    //2 pucks shift 1 stays original pos
+                if(VerticalCircles.Contains(index)){
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
+                    PucksAll[PuckRef[PucksInCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);
+                }
+                else{
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0.25f,0);
+                    PucksAll[PuckRef[PucksInCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0);
+                }
+                break;
+            }
+            case 4:{
+                    PucksAll[PuckRef[PucksInCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,0.25f);
+                    PucksAll[PuckRef[PucksInCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0.25f,-0.25f);
+                    PucksAll[PuckRef[PucksInCircle[index][2]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,-0.25f);
+                    PucksAll[PuckRef[PucksInCircle[index][3]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(-0.25f,0.25f);
                     break;
             }
         }

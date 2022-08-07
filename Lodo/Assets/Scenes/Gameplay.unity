@@ -2632,7 +2632,8 @@ MonoBehaviour:
   Menu: {fileID: 204094462}
   AllIN: 
   Completed: 
-  CircleOn: 
+  CountOnCircle: 
+  PucksOnUnSafe: 
   AllPucks:
   - {fileID: 6000022}
   - {fileID: 1001971855}
@@ -2650,6 +2651,9 @@ MonoBehaviour:
   - {fileID: 1249380639}
   - {fileID: 2147442355}
   - {fileID: 740114952}
+  Lefter: []
+  Righter: []
+  Middler: []
 --- !u!1 &412261095
 GameObject:
   m_ObjectHideFlags: 0
@@ -11918,7 +11922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915639389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.127404, y: 6.023987, z: 0}
+  m_LocalPosition: {x: 3.061, y: 6.023987, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1497739953}
@@ -13087,7 +13091,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2064087312}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.9603868, y: 6.023987, z: 0}
+  m_LocalPosition: {x: 4.024, y: 6.023987, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1497739953}
