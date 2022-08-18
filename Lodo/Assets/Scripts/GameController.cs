@@ -152,6 +152,7 @@ public class GameController : MonoBehaviour
                 break;
             }
             case 3:{    //2 pucks shift 1 stays original pos
+                PucksAll[PuckRef[PucksInCircle[index][2]]].transform.position=(Vector2)SafePointes[index].transform.position;
                 if(VerticalCircles.Contains(index)){
                     PucksAll[PuckRef[PucksInCircle[index][0]]].transform.position=(Vector2)SafePointes[index].transform.position + new Vector2(0,0.25f);
                     PucksAll[PuckRef[PucksInCircle[index][1]]].transform.position=(Vector2)SafePointes[index].transform.position - new Vector2(0,0.25f);

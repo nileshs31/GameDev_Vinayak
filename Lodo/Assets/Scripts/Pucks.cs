@@ -67,6 +67,21 @@ public class Pucks : MonoBehaviour
         {
             if (!alive && other.gameObject.GetComponent<Pucks>().alive) //Player to Die
             {
+                if(UnSafeCollider){
+                    if(gc.Middler[player]!=null){
+                    UnSafeKillAll(GameObject.Find(gc.Middler[player]));
+                    gc.Middler[player]=null;
+                    }
+                    if(gc.Lefter[player]!=null){
+                    UnSafeKillAll(GameObject.Find(gc.Lefter[player]));
+                    gc.Lefter[player]=null;
+                    }
+                    if(gc.Righter[player]!=null){
+                    UnSafeKillAll(GameObject.Find(gc.Righter[player]));
+                    gc.Righter[player]=null;
+                    }
+                    return;
+                }
                 transform.position = Origin;
                 switch (player)
                 {
@@ -103,8 +118,8 @@ public class Pucks : MonoBehaviour
             if (gc.Lefter[player] == null)
             {
                 gc.Lefter[player] = gameObject.name;
-                gameObject.transform.position += new Vector3(0, 0.2f, 0);
-                other.gameObject.transform.position -= new Vector3(0, 0.2f, 0);
+                gameObject.transform.position += new Vector3(0.2f,0,0);
+                other.gameObject.transform.position -= new Vector3(0.2f,0,0);
                 gc.Righter[player] = other.gameObject.name;
                 other.gameObject.GetComponent<Pucks>().UnSafeCollider = true;
             }
@@ -304,23 +319,46 @@ public class Pucks : MonoBehaviour
         {
             if (gc.Lefter[player] == gameObject.name)
             {
-                gameObject.transform.position -= new Vector3(0, 0.2f, 0);
+                gameObject.transform.position -= new Vector3(0.2f,0,0);
                 GameObject.Find(gc.Righter[player]).transform.localScale = new Vector3(0.49f, 0.49f, 0.49f);
                 GameObject.Find(gc.Righter[player]).GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
                 GameObject.Find(gc.Righter[player]).GetComponent<Pucks>().UnSafeCollider = false;
-                GameObject.Find(gc.Righter[player]).transform.position += new Vector3(0, 0.2f, 0);
+                GameObject.Find(gc.Righter[player]).transform.position += new Vector3(0.2f,0,0);
             }
             else
             {
-                gameObject.transform.position += new Vector3(0, 0.2f, 0);
+                gameObject.transform.position += new Vector3(0.2f,0,0);
                 GameObject.Find(gc.Lefter[player]).transform.localScale = new Vector3(0.49f, 0.49f, 0.49f);
                 GameObject.Find(gc.Lefter[player]).GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
                 GameObject.Find(gc.Lefter[player]).GetComponent<Pucks>().UnSafeCollider = false;
-                GameObject.Find(gc.Lefter[player]).transform.position -= new Vector3(0, 0.2f, 0);
+                GameObject.Find(gc.Lefter[player]).transform.position -= new Vector3(0.2f,0,0);
             }
             gc.Lefter[player] = null;
             gc.Righter[player] = null;
         }
         UnSafeCollider = false;
+    }
+    void UnSafeKillAll(GameObject obj){
+        obj.transform.position = obj.GetComponent<Pucks>().Origin;
+        obj.transform.localScale = new Vector3(0.49f, 0.49f, 0.49f);
+        obj.GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
+                switch (player)
+                {
+                    case 0:
+                        obj.GetComponent<Pucks>().place = 0;
+                        break;
+                    case 1:
+                        obj.GetComponent<Pucks>().place = 13;
+                        break;
+                    case 2:
+                        obj.GetComponent<Pucks>().place = 26;
+                        break;
+                    case 3:
+                        obj.GetComponent<Pucks>().place = 39;
+                        break;
+                }
+                obj.GetComponent<Pucks>().count = 0;
+                obj.GetComponent<Pucks>().inHome = true;
+                gc.AllIN[player] -= 1;
     }
 }
