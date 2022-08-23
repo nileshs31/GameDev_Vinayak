@@ -71,4 +71,7 @@ public class AI : MonoBehaviour
         StopCoroutine("SelectRandom");
         StartCoroutine("SelectRandom", 0.3f);
     }
+    public void StopAll(){
+        StopAllCoroutines();
+    }
 }

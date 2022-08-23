@@ -95,10 +95,11 @@ public class GameController : MonoBehaviour
     }
     public void WinOverlayer(int p){
         WinOverlay[p].SetActive(true);
-        if(pos==0)
-        WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
-        else
-        WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text+=pos;
+        // if(pos==0)
+        // WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        // else
+        WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text+=pos.ToString();
+        pos++;
     }
     public void back(){
         if(screen==0){

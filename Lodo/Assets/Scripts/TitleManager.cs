@@ -108,5 +108,6 @@ public class TitleManager : MonoBehaviour
         Player3UI.SetActive(true);
         Player2UI.SetActive(true);
         Player4UI.SetActive(false);
+        PlayButton.SetActive(false);
     }
 }

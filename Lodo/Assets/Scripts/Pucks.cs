@@ -162,6 +162,7 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator MovePlayer()
     {
+        //AI.StopAll();
         if (UnSafeCollider) //Overlap with same player or Safe Position
         {
             UnSafeRefix();
