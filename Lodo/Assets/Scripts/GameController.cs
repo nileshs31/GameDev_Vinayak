@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject[] PucksAll,SafePointes,WinOverlay,BluePucks,YellowPucks,GreenPucks;
+    public GameObject[] PucksAll,SafePointes,WinOverlay,BluePucks,YellowPucks,GreenPucks,RedPucks;
     public GameObject Menu;
     public int[] AllIN,Completed,CountOnCircle,PucksOnUnSafe;  //CicleOn - count of pucks on circle;
     public Pucks[] AllPucks;
@@ -73,6 +73,11 @@ public class GameController : MonoBehaviour
         if(TitleManager.AIgreen){
             for(int i=0; i<4;i++){
                 GreenPucks[i].GetComponent<AI>().enabled=true;
+            }
+        }
+        if(TitleManager.AIred){
+            for(int i=0; i<4;i++){
+                RedPucks[i].GetComponent<AI>().enabled=true;
             }
         }
         Pucks.OverlapFixed += SafePointFix;

@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TitleManager : MonoBehaviour
 {
     public GameObject BackButton,OnlineButton,OfflineButton,player2,player3,player4,Quitbutton,PlayButton;
     public GameObject Player4UI,Player3UI,Player2UI;
     public static int playercount;
-    public static bool AIblue,AIgreen,AIyellow;
+    public static bool AIblue,AIgreen,AIyellow,AIred;
+    public GameObject r,b,g,y;
     int screen=0;
 
     private void OnEnable() {
@@ -90,12 +92,19 @@ public class TitleManager : MonoBehaviour
     }
     public void AIYellowToggle(bool ai){
         AIyellow=ai;
+        y.GetComponent<Text>().text= ai ? "AI" : "Player";
     }
     public void AIBlueToggle(bool ai){
         AIblue=ai;
+        b.GetComponent<Text>().text= ai ? "AI" : "Player";
     }
     public void AIGreenToggle(bool ai){
         AIgreen=ai;
+        g.GetComponent<Text>().text= ai ? "AI" : "Player";
+    }
+    public void AIRedToggle(bool ai){
+        AIred=ai;
+        r.GetComponent<Text>().text= ai ? "AI" : "Player";
     }
     public void PlayGame(){
         SceneManager.LoadScene("Gameplay");

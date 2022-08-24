@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 6000022}
   - component: {fileID: 6000023}
   - component: {fileID: 6000024}
+  - component: {fileID: 6000025}
   m_Layer: 0
   m_Name: Red1
   m_TagString: Untagged
@@ -314,6 +315,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &6000025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000019}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9104247
 GameObject:
   m_ObjectHideFlags: 0
@@ -2629,6 +2642,11 @@ MonoBehaviour:
   - {fileID: 1367660670}
   - {fileID: 954903941}
   - {fileID: 179748495}
+  RedPucks:
+  - {fileID: 6000019}
+  - {fileID: 1001971852}
+  - {fileID: 1825687113}
+  - {fileID: 509511676}
   Menu: {fileID: 204094462}
   AllIN: 
   Completed: 
@@ -3117,6 +3135,7 @@ GameObject:
   - component: {fileID: 509511679}
   - component: {fileID: 509511680}
   - component: {fileID: 509511681}
+  - component: {fileID: 509511682}
   m_Layer: 0
   m_Name: Red4
   m_TagString: Untagged
@@ -3295,6 +3314,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &509511682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509511676}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -6907,6 +6938,7 @@ GameObject:
   - component: {fileID: 1001971855}
   - component: {fileID: 1001971856}
   - component: {fileID: 1001971857}
+  - component: {fileID: 1001971858}
   m_Layer: 0
   m_Name: Red2
   m_TagString: Untagged
@@ -7085,6 +7117,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1001971858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001971852}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1011119695
 GameObject:
   m_ObjectHideFlags: 0
@@ -11399,6 +11443,7 @@ GameObject:
   - component: {fileID: 1825687116}
   - component: {fileID: 1825687117}
   - component: {fileID: 1825687118}
+  - component: {fileID: 1825687119}
   m_Layer: 0
   m_Name: Red3
   m_TagString: Untagged
@@ -11577,6 +11622,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1825687119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825687113}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 808dd9a7702a3d14d96da64e1c02b5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1826631816
 GameObject:
   m_ObjectHideFlags: 0

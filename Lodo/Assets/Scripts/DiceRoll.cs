@@ -33,10 +33,14 @@ public class DiceRoll : MonoBehaviour
         gameObject.transform.position = DicePlaceHolder[0].transform.position;
         BadLuck = new int[4];
         AItracker = new bool[4];
-        AItracker[0] = false;
+        AItracker[0] = TitleManager.AIred;
         AItracker[1] = TitleManager.AIblue;
         AItracker[2] = TitleManager.AIgreen;
         AItracker[3] = TitleManager.AIyellow;
+        if (AItracker[chance])
+        {
+            StartCoroutine("DelayedSpin");
+        }
     }
     void OnMouseDown()
     {
