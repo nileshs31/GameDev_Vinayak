@@ -51,12 +51,12 @@ public class GameController : MonoBehaviour
         PucksOnUnSafe = new int[4];
         switch(TitleManager.playercount){
             case 2: Completed[1]=4;
-                    WinOverlayer(1);
+                    WinOverlayer(1,true);
                     Completed[3]=4;
-                    WinOverlayer(3);
+                    WinOverlayer(3,true);
                     break;
             case 3: Completed[3]=4;
-                    WinOverlayer(3);
+                    WinOverlayer(3,true);
                     break;
         }
         pos=1;
@@ -98,11 +98,11 @@ public class GameController : MonoBehaviour
             SafePointes[i].GetComponent<BoxCollider>().enabled=false;
         }
     }
-    public void WinOverlayer(int p){
+    public void WinOverlayer(int p,bool inactive=false){
         WinOverlay[p].SetActive(true);
-        // if(pos==0)
-        // WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
-        // else
+        if(inactive)
+        WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
+        else
         WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text+=pos.ToString();
         pos++;
     }

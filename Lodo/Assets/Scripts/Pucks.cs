@@ -15,6 +15,8 @@ public class Pucks : MonoBehaviour
     GameController gc;
     bool UnSafeCollider;
     int inCircle = -1;
+    public delegate void AIstopper();
+    public static event AIstopper AIStop;
     private void OnEnable()
     {
         OverlapFixed = null;
@@ -162,6 +164,9 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator MovePlayer()
     {
+        if(AIStop!=null){
+            AIStop();
+        }
         //AI.StopAll();
         if (UnSafeCollider) //Overlap with same player or Safe Position
         {
@@ -211,6 +216,9 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator AutoRun()
     {
+        if(AIStop!=null){
+            AIStop();
+        }
         alive = true;
         if (OverlapFixed != null)
             OverlapFixed();
@@ -310,6 +318,7 @@ public class Pucks : MonoBehaviour
     {
         gameObject.transform.localScale = new Vector3(0.49f, 0.49f, 0.49f);
         gameObject.GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
+        gameObject.GetComponent<BoxCollider>().isTrigger = false;
         if (gc.Middler[player] == gameObject.name)
         {
             gc.Middler[player] = null;
@@ -325,6 +334,7 @@ public class Pucks : MonoBehaviour
                 GameObject.Find(gc.Righter[player]).GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
                 GameObject.Find(gc.Righter[player]).GetComponent<Pucks>().UnSafeCollider = false;
                 GameObject.Find(gc.Righter[player]).transform.position += new Vector3(0.2f,0,0);
+                GameObject.Find(gc.Righter[player]).GetComponent<BoxCollider>().isTrigger=false;
             }
             else
             {
@@ -333,6 +343,7 @@ public class Pucks : MonoBehaviour
                 GameObject.Find(gc.Lefter[player]).GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
                 GameObject.Find(gc.Lefter[player]).GetComponent<Pucks>().UnSafeCollider = false;
                 GameObject.Find(gc.Lefter[player]).transform.position -= new Vector3(0.2f,0,0);
+                GameObject.Find(gc.Lefter[player]).GetComponent<BoxCollider>().isTrigger=false;
             }
             gc.Lefter[player] = null;
             gc.Righter[player] = null;
