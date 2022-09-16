@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public GameObject[] PucksAll,SafePointes,WinOverlay,BluePucks,YellowPucks,GreenPucks,RedPucks;
-    public GameObject Menu;
-    public int[] AllIN,Completed,CountOnCircle,PucksOnUnSafe;  //CicleOn - count of pucks on circle;
+    public GameObject Menu,FinishGame;
     public Pucks[] AllPucks;
+    public int[] AllIN,Completed,CountOnCircle,PucksOnUnSafe;  //CicleOn - count of pucks on circle;
     public string[] Lefter,Righter,Middler; //For UnsafeCollision
     Vector3 Smallscale,LargeCollider;
     int screen=0,pos=0;
@@ -103,8 +103,10 @@ public class GameController : MonoBehaviour
         if(inactive)
         WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "";
         else
+        {
         WinOverlay[p].GetComponentInChildren<TMPro.TextMeshProUGUI>().text+=pos.ToString();
         pos++;
+        }
     }
     public void back(){
         if(screen==0){
@@ -177,5 +179,21 @@ public class GameController : MonoBehaviour
                     break;
             }
         }
+    }
+    public void GameFinisher(){
+        int count=0,loss=4;
+        for(int i=0;i<4;i++){
+            if(Completed[i]==4)
+            count++;
+            else
+            loss=i;
+        }
+        if(count==3){
+            WinOverlayer(loss);
+            FinishGame.SetActive(true);
+        }
+    }
+    public void Restart(){
+        SceneManager.LoadScene("Gameplay");
     }
 }

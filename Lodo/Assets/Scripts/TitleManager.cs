@@ -16,9 +16,10 @@ public class TitleManager : MonoBehaviour
     private void OnEnable() {
         DontDestroyOnLoad(gameObject);
         playercount=4;
-        AIblue=false;
+        AIblue=false;   //removing AI on Restart
         AIyellow=false;
         AIgreen=false;
+        AIred=false;
     }
     public void Offline(){
         BackButton.SetActive(true);

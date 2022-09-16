@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class Pucks : MonoBehaviour
 {
-    public int player = 0, dice, count = 0, place;
-    public bool inHome = true;
-    Vector2 Origin;
-    public GameObject[] PublicRoute;
-    public bool alive = false; //To Detect Collisions in MovePlayer
+    Vector2 Origin; //just to store stating position of puck
     GameObject Parent; //For Routing Last Route of each color
-    public static Action OverlapFixed;
     GameController gc;
-    bool UnSafeCollider;
-    int inCircle = -1;
-    public delegate void AIstopper();
+    bool UnSafeCollider;    //variable to use for collider setting to be able to do something
+    int inCircle = -1;      //basically to store Safe circle number on which puck is
+    public int player = 0, dice, count = 0, place;  //place is for moving on blocks of ludo, count is normal run
+    public bool inHome = true,alive = false; //To Detect Collisions in MovePlayer;
+    public GameObject[] PublicRoute;
+    public static int SamePositionAutoRun = 100;    //Auto run extention
+    public static Action OverlapFixed;      //used for colliders enabling and disabling
+    public delegate void AIstopper();   //to stop AI script as any puck moves
     public static event AIstopper AIStop;
     private void OnEnable()
     {
         OverlapFixed = null;
     }
     void Start()
-    {
+    {   //Just Initiallizations
         DiceRoll.Rolled += Dicenumber;
         OverlapFixed += OverlapFix;
         gc = GameObject.Find("GameManager").GetComponent<GameController>();
@@ -69,18 +69,22 @@ public class Pucks : MonoBehaviour
         {
             if (!alive && other.gameObject.GetComponent<Pucks>().alive) //Player to Die
             {
-                if(UnSafeCollider){
-                    if(gc.Middler[player]!=null){
-                    UnSafeKillAll(GameObject.Find(gc.Middler[player]));
-                    gc.Middler[player]=null;
+                if (UnSafeCollider)
+                {
+                    if (gc.Middler[player] != null)
+                    {
+                        UnSafeKillAll(GameObject.Find(gc.Middler[player]));
+                        gc.Middler[player] = null;
                     }
-                    if(gc.Lefter[player]!=null){
-                    UnSafeKillAll(GameObject.Find(gc.Lefter[player]));
-                    gc.Lefter[player]=null;
+                    if (gc.Lefter[player] != null)
+                    {
+                        UnSafeKillAll(GameObject.Find(gc.Lefter[player]));
+                        gc.Lefter[player] = null;
                     }
-                    if(gc.Righter[player]!=null){
-                    UnSafeKillAll(GameObject.Find(gc.Righter[player]));
-                    gc.Righter[player]=null;
+                    if (gc.Righter[player] != null)
+                    {
+                        UnSafeKillAll(GameObject.Find(gc.Righter[player]));
+                        gc.Righter[player] = null;
                     }
                     return;
                 }
@@ -120,8 +124,8 @@ public class Pucks : MonoBehaviour
             if (gc.Lefter[player] == null)
             {
                 gc.Lefter[player] = gameObject.name;
-                gameObject.transform.position += new Vector3(0.2f,0,0);
-                other.gameObject.transform.position -= new Vector3(0.2f,0,0);
+                gameObject.transform.position += new Vector3(0.2f, 0, 0);
+                other.gameObject.transform.position -= new Vector3(0.2f, 0, 0);
                 gc.Righter[player] = other.gameObject.name;
                 other.gameObject.GetComponent<Pucks>().UnSafeCollider = true;
             }
@@ -164,7 +168,8 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator MovePlayer()
     {
-        if(AIStop!=null){
+        if (AIStop != null)
+        {
             AIStop();
         }
         //AI.StopAll();
@@ -216,7 +221,8 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator AutoRun()
     {
-        if(AIStop!=null){
+        if (AIStop != null)
+        {
             AIStop();
         }
         alive = true;
@@ -243,10 +249,17 @@ public class Pucks : MonoBehaviour
     }
     IEnumerator AutoRunning()
     {
+        SamePositionAutoRun = count;
         DiceRoll.tempdice2 += 1;
         yield return new WaitForSeconds(0.25f);
         if (DiceRoll.tempdice2 == 1)
             StartCoroutine("MovePlayer");
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.02f, 0.2f));
+        if (DiceRoll.tempdice2 == 2 && SamePositionAutoRun == count)
+        {
+            SamePositionAutoRun = 100;
+            StartCoroutine("MovePlayer");
+        }
     }
     void OverlapIssue()
     {
@@ -307,6 +320,7 @@ public class Pucks : MonoBehaviour
         else
             GameObject.Find("Dice").GetComponent<DiceRoll>().ReThrow();
         gameObject.GetComponent<Pucks>().enabled = false;
+        gc.GameFinisher();
     }
     IEnumerator DelayedUnsafeFix()
     {
@@ -329,48 +343,49 @@ public class Pucks : MonoBehaviour
         {
             if (gc.Lefter[player] == gameObject.name)
             {
-                gameObject.transform.position -= new Vector3(0.2f,0,0);
+                gameObject.transform.position -= new Vector3(0.2f, 0, 0);
                 GameObject.Find(gc.Righter[player]).transform.localScale = new Vector3(0.49f, 0.49f, 0.49f);
                 GameObject.Find(gc.Righter[player]).GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
                 GameObject.Find(gc.Righter[player]).GetComponent<Pucks>().UnSafeCollider = false;
-                GameObject.Find(gc.Righter[player]).transform.position += new Vector3(0.2f,0,0);
-                GameObject.Find(gc.Righter[player]).GetComponent<BoxCollider>().isTrigger=false;
+                GameObject.Find(gc.Righter[player]).transform.position += new Vector3(0.2f, 0, 0);
+                GameObject.Find(gc.Righter[player]).GetComponent<BoxCollider>().isTrigger = false;
             }
             else
             {
-                gameObject.transform.position += new Vector3(0.2f,0,0);
+                gameObject.transform.position += new Vector3(0.2f, 0, 0);
                 GameObject.Find(gc.Lefter[player]).transform.localScale = new Vector3(0.49f, 0.49f, 0.49f);
                 GameObject.Find(gc.Lefter[player]).GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
                 GameObject.Find(gc.Lefter[player]).GetComponent<Pucks>().UnSafeCollider = false;
-                GameObject.Find(gc.Lefter[player]).transform.position -= new Vector3(0.2f,0,0);
-                GameObject.Find(gc.Lefter[player]).GetComponent<BoxCollider>().isTrigger=false;
+                GameObject.Find(gc.Lefter[player]).transform.position -= new Vector3(0.2f, 0, 0);
+                GameObject.Find(gc.Lefter[player]).GetComponent<BoxCollider>().isTrigger = false;
             }
             gc.Lefter[player] = null;
             gc.Righter[player] = null;
         }
         UnSafeCollider = false;
     }
-    void UnSafeKillAll(GameObject obj){
+    void UnSafeKillAll(GameObject obj)
+    {
         obj.transform.position = obj.GetComponent<Pucks>().Origin;
         obj.transform.localScale = new Vector3(0.49f, 0.49f, 0.49f);
         obj.GetComponent<BoxCollider>().size = new Vector3(0.85f, 0.85f, 0.85f);
-                switch (player)
-                {
-                    case 0:
-                        obj.GetComponent<Pucks>().place = 0;
-                        break;
-                    case 1:
-                        obj.GetComponent<Pucks>().place = 13;
-                        break;
-                    case 2:
-                        obj.GetComponent<Pucks>().place = 26;
-                        break;
-                    case 3:
-                        obj.GetComponent<Pucks>().place = 39;
-                        break;
-                }
-                obj.GetComponent<Pucks>().count = 0;
-                obj.GetComponent<Pucks>().inHome = true;
-                gc.AllIN[player] -= 1;
+        switch (player)
+        {
+            case 0:
+                obj.GetComponent<Pucks>().place = 0;
+                break;
+            case 1:
+                obj.GetComponent<Pucks>().place = 13;
+                break;
+            case 2:
+                obj.GetComponent<Pucks>().place = 26;
+                break;
+            case 3:
+                obj.GetComponent<Pucks>().place = 39;
+                break;
+        }
+        obj.GetComponent<Pucks>().count = 0;
+        obj.GetComponent<Pucks>().inHome = true;
+        gc.AllIN[player] -= 1;
     }
 }
